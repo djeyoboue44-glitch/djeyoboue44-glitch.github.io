@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>DJE YOBOUE | Cybersécurité • Infrastructures • Réseaux</title>
+<title>DJE YOBOUE | Cybersécurité • Réseaux • Systèmes • Infrastructure</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
 
@@ -74,7 +74,7 @@ nav a:hover{color:var(--accent);}
 
 /* SECTIONS */
 section{
-  padding:110px 8%;
+  padding:120px 8%;
   opacity:0;
   transform:translateY(20px);
   transition:1s ease;
@@ -86,7 +86,7 @@ section.show{
 }
 
 h1{
-  font-size:4.2rem;
+  font-size:4.5rem;
   font-family:Orbitron;
 }
 
@@ -96,8 +96,12 @@ h1 span{
 }
 
 h2{
-  font-size:2rem;
+  font-size:2.2rem;
   margin-bottom:20px;
+}
+
+h3{
+  margin-bottom:10px;
 }
 
 p{
@@ -105,6 +109,7 @@ p{
   line-height:1.9;
 }
 
+/* BADGE */
 .badge{
   display:inline-block;
   margin-top:15px;
@@ -116,21 +121,11 @@ p{
   font-weight:600;
 }
 
-/* TERMINAL */
-.terminal{
-  margin-top:25px;
-  padding:18px;
-  border-radius:12px;
-  background:#0b1220;
-  border:1px solid rgba(0,217,255,.25);
-  font-family:monospace;
-}
-
 /* GRID */
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:20px;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:22px;
 }
 
 /* CARD */
@@ -159,6 +154,17 @@ p{
   color:var(--accent);
 }
 
+/* TERMINAL */
+.terminal{
+  margin-top:25px;
+  padding:18px;
+  border-radius:12px;
+  background:#0b1220;
+  border:1px solid rgba(0,217,255,.25);
+  font-family:monospace;
+}
+
+/* CONTACT */
 .contact-box{
   background:linear-gradient(145deg,#0f1724,#0b1220);
   border:1px solid rgba(0,217,255,.2);
@@ -166,6 +172,7 @@ p{
   border-radius:15px;
 }
 
+/* FOOTER */
 footer{
   text-align:center;
   padding:30px;
@@ -177,13 +184,13 @@ footer{
 
 <body>
 
+<!-- NAV -->
 <nav>
   <div class="logo">DJE.YOBOUE</div>
   <div>
     <a href="#about">À propos</a>
     <a href="#skills">Compétences</a>
-    <a href="#projects">Projets</a>
-    <a href="#experience">Expérience</a>
+    <a href="#experience">Expériences</a>
     <a href="#certifications">Certifications</a>
     <a href="#contact">Contact</a>
   </div>
@@ -194,21 +201,21 @@ footer{
 
 <h1>DJE <span>YOBOUE</span></h1>
 
-<h2>Cybersécurité • Réseaux • Systèmes • Infrastructure</h2>
+<h2>Cybersécurité • Réseaux • Systèmes • Infrastructure IT</h2>
 
 <div class="badge">
 🎓 Alternance : 3 semaines entreprise / 1 semaine école
 </div>
 
 <p>
-Étudiant en IT orienté cybersécurité et infrastructures.
-Je développe des compétences pratiques sur des environnements virtualisés (Active Directory, Linux, SIEM).
+Étudiant en informatique spécialisé en cybersécurité, systèmes et réseaux.
+Je développe mes compétences sur des environnements professionnels simulés afin de reproduire des infrastructures réelles d’entreprise.
 </p>
 
 <div class="terminal">
-root@system:~$ status<br>
-Recherche alternance cybersécurité / réseau<br>
-Île-de-France<br>
+root@system:~$ identity → Étudiant IT cybersécurité<br>
+root@system:~$ focus → SOC | Réseaux | Systèmes<br>
+root@system:~$ status → Recherche alternance active (Île-de-France)
 </div>
 
 </section>
@@ -216,13 +223,23 @@ Recherche alternance cybersécurité / réseau<br>
 <!-- ABOUT -->
 <section id="about">
 
-<h2>À propos</h2>
+<h2>À propos de moi</h2>
 
 <p>
-Passionné par les infrastructures IT et la cybersécurité, je travaille sur des environnements réels simulés
-pour comprendre les systèmes, les réseaux et les attaques.
+Je suis passionné par les systèmes informatiques, les réseaux et la cybersécurité.
+Mon objectif est de comprendre le fonctionnement global des infrastructures IT et leur sécurisation.
 <br><br>
-Objectif : devenir ingénieur cybersécurité / SOC / infrastructure.
+
+J’ai développé des compétences pratiques sur des environnements virtualisés :
+Active Directory, Linux, Windows Server, outils de monitoring et analyse réseau.
+<br><br>
+
+Je m’intéresse particulièrement à la détection d’incidents, à l’analyse des logs et à la sécurisation des infrastructures d’entreprise.
+<br><br>
+
+📍 Basé en Île-de-France<br>
+🚗 Permis B<br>
+🏛️ Membre JCI (Jeune Chambre Internationale)
 </p>
 
 </section>
@@ -230,36 +247,53 @@ Objectif : devenir ingénieur cybersécurité / SOC / infrastructure.
 <!-- SKILLS -->
 <section id="skills">
 
-<h2>Compétences</h2>
+<h2>Compétences techniques</h2>
 
 <div class="grid">
 
 <div class="card">
 <h3>Cybersécurité</h3>
+<p>
+Analyse des menaces, détection d’incidents et compréhension des attaques informatiques.
+</p>
 <span class="tag">SOC</span>
 <span class="tag">Blue Team</span>
-<span class="tag">MITRE</span>
+<span class="tag">MITRE ATT&CK</span>
+<span class="tag">Analyse logs</span>
 </div>
 
 <div class="card">
 <h3>Systèmes & Réseaux</h3>
+<p>
+Administration Windows/Linux, architecture réseau et services d’infrastructure.
+</p>
 <span class="tag">Windows Server</span>
 <span class="tag">Linux</span>
+<span class="tag">TCP/IP</span>
 <span class="tag">DNS</span>
 <span class="tag">DHCP</span>
+<span class="tag">Active Directory</span>
 </div>
 
 <div class="card">
-<h3>SIEM</h3>
-<span class="tag">ELK</span>
+<h3>Supervision / SIEM</h3>
+<p>
+Analyse et centralisation des logs pour détecter anomalies et comportements suspects.
+</p>
+<span class="tag">ELK Stack</span>
 <span class="tag">Kibana</span>
 <span class="tag">Wireshark</span>
+<span class="tag">Monitoring</span>
 </div>
 
 <div class="card">
 <h3>Virtualisation</h3>
+<p>
+Création de laboratoires techniques pour simuler des environnements professionnels.
+</p>
 <span class="tag">VMware</span>
 <span class="tag">VirtualBox</span>
+<span class="tag">Kali Linux</span>
 </div>
 
 </div>
@@ -274,18 +308,34 @@ Objectif : devenir ingénieur cybersécurité / SOC / infrastructure.
 <div class="grid">
 
 <div class="card">
-<h3>Active Directory</h3>
-<p>Infrastructure complète avec GPO, utilisateurs et sécurité.</p>
+<h3>Active Directory – Infrastructure entreprise</h3>
+<p>
+Mise en place complète d’un domaine Windows Server :
+gestion utilisateurs, groupes, GPO, permissions et sécurisation des accès.
+</p>
 </div>
 
 <div class="card">
-<h3>SIEM ELK</h3>
-<p>Analyse et centralisation de logs en temps réel.</p>
+<h3>SIEM ELK Stack</h3>
+<p>
+Installation et configuration d’un système de supervision des logs avec dashboards Kibana.
+Analyse des événements en temps réel.
+</p>
 </div>
 
 <div class="card">
 <h3>Analyse réseau</h3>
-<p>Wireshark + détection trafic suspect.</p>
+<p>
+Étude du trafic réseau avec Wireshark et identification de comportements suspects.
+Compréhension des attaques réseau basiques.
+</p>
+</div>
+
+<div class="card">
+<h3>Infrastructure réseau</h3>
+<p>
+Configuration de VLAN, DHCP, DNS et firewall dans un environnement simulé entreprise.
+</p>
 </div>
 
 </div>
@@ -300,21 +350,29 @@ Objectif : devenir ingénieur cybersécurité / SOC / infrastructure.
 <div class="grid">
 
 <div class="card">
-<h3>Certification cybersécurité</h3>
-<p>À compléter (ex: Security+, Cisco, Google Cybersecurity)</p>
-<span class="tag">Cyber</span>
+<h3>Cybersécurité</h3>
+<p>
+Formation en cours / en préparation sur la sécurité informatique et les systèmes de défense.
+</p>
+<span class="tag">Security+</span>
 </div>
 
 <div class="card">
 <h3>Réseaux</h3>
-<p>Formation réseaux et infrastructures</p>
-<span class="tag">Network</span>
+<p>
+Compétences acquises en réseaux informatiques et protocoles de communication.
+</p>
+<span class="tag">Cisco</span>
+<span class="tag">TCP/IP</span>
 </div>
 
 <div class="card">
 <h3>Systèmes</h3>
-<p>Administration Linux / Windows Server</p>
-<span class="tag">IT</span>
+<p>
+Administration Windows et Linux avec pratique en virtualisation.
+</p>
+<span class="tag">Linux</span>
+<span class="tag">Windows Server</span>
 </div>
 
 </div>
@@ -331,7 +389,7 @@ Objectif : devenir ingénieur cybersécurité / SOC / infrastructure.
 <p><strong>Email :</strong> djeyoboue44@gmail.com</p>
 <p><strong>Téléphone :</strong> 06 14 33 03 23</p>
 <p><strong>Localisation :</strong> Île-de-France</p>
-<p><strong>Alternance :</strong> 3 semaines / 1 semaine</p>
+<p><strong>Alternance :</strong> 3 semaines entreprise / 1 semaine école</p>
 
 </div>
 
