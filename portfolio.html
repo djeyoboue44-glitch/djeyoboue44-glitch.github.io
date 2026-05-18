@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YOBOUE DJE — Cybersécurité</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@400;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #050a0e;
+      --surface: #0a1520;
+      --border: #0d2233;
+      --accent: #00f0ff;
+      --accent2: #ff3e6c;
+      --text: #c8d8e8;
+      --muted: #4a6070;
+      --glow: 0 0 18px rgba(0,240,255,0.25);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Syne', sans-serif;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* Custom cursor */
+    .cursor {
+      position: fixed;
+      width: 12px; height: 12px;
+      background: var(--accent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.08s, background 0.2s;
+      mix-blend-mode: screen;
+    }
+    .cursor-ring {
+      position: fixed;
+      width: 34px; height: 34px;
+      border: 1px solid var(--accent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.18s, border-color 0.2s;
+      opacity: 0.5;
+    }
+
+    /* Noise overlay */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.6;
+    }
+
+    /* Scan line */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,240,255,0.015) 2px,
+        rgba(0,240,255,0.015) 4px
+      );
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* ─── HEADER ─── */
+    header {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 8vw;
+      overflow: hidden;
+    }
+
+    .grid-bg {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(0,240,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,240,255,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      animation: gridShift 20s linear infinite;
+    }
+
+    @keyframes gridShift {
+      from { background-position: 0 0; }
+      to { background-position: 60px 60px; }
+    }
+
+    .hex-decoration {
+      position: absolute;
+      right: 6vw; top: 50%;
+      transform: translateY(-50%);
+      width: 340px; height: 340px;
+      opacity: 0.07;
+    }
+
+    .badge {
+      display: inline-block;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      border: 1px solid rgba(0,240,255,0.3);
+      padding: 4px 12px;
+      margin-bottom: 28px;
+      animation: fadeIn 1s ease both;
+    }
+
+    .hero-name {
+      font-size: clamp(3rem, 7vw, 6rem);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      animation: slideUp 0.9s cubic-bezier(0.16,1,0.3,1) both;
+      animation-delay: 0.1s;
+    }
+
+    .hero-name span {
+      color: var(--accent);
+      text-shadow: var(--glow);
+    }
+
+    .hero-title {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: clamp(0.85rem, 1.6vw, 1.1rem);
+      color: var(--muted);
+      margin-top: 16px;
+      letter-spacing: 0.08em;
+      animation: slideUp 0.9s cubic-bezier(0.16,1,0.3,1) both;
+      animation-delay: 0.2s;
+    }
+
+    .hero-title .typing {
+      color: var(--accent2);
+      border-right: 2px solid var(--accent2);
+      animation: blink 0.8s step-end infinite;
+    }
+
+    @keyframes blink { 50% { border-color: transparent; } }
+
+    .hero-desc {
+      max-width: 520px;
+      margin-top: 28px;
+      line-height: 1.7;
+      color: #7a9ab0;
+      font-size: 1rem;
+      animation: slideUp 0.9s cubic-bezier(0.16,1,0.3,1) both;
+      animation-delay: 0.3s;
+    }
+
+    .cta-row {
+      display: flex; gap: 16px;
+      margin-top: 40px;
+      animation: slideUp 0.9s cubic-bezier(0.16,1,0.3,1) both;
+      animation-delay: 0.4s;
+    }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 28px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: all 0.25s;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--bg);
+      clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    }
+    .btn-primary:hover { background: #fff; box-shadow: var(--glow); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid rgba(0,240,255,0.4);
+      clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    }
+    .btn-outline:hover { background: rgba(0,240,255,0.08); }
+
+    .scroll-hint {
+      position: absolute; bottom: 36px; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--muted);
+      letter-spacing: 0.15em;
+      animation: fadeIn 2s ease 1.5s both;
+    }
+
+    .scroll-line {
+      width: 1px; height: 48px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.2); }
+    }
+
+    /* ─── SECTIONS ─── */
+    section {
+      position: relative;
+      padding: 100px 8vw;
+      z-index: 3;
+    }
+
+    .section-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .section-label::before {
+      content: '// ';
+      color: var(--muted);
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 56px;
+    }
+
+    .divider {
+      width: 60px; height: 2px;
+      background: linear-gradient(to right, var(--accent), transparent);
+      margin: 20px 0 48px;
+    }
+
+    /* ─── SKILLS ─── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .skill-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .skill-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: var(--accent);
+      transform: scaleY(0);
+      transform-origin: bottom;
+      transition: transform 0.3s;
+    }
+
+    .skill-card:hover {
+      border-color: rgba(0,240,255,0.3);
+      transform: translateY(-4px);
+    }
+    .skill-card:hover::before { transform: scaleY(1); }
+
+    .skill-icon {
+      font-size: 1.8rem;
+      margin-bottom: 14px;
+      display: block;
+    }
+
+    .skill-name {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .skill-desc {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .skill-tags {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      margin-top: 14px;
+    }
+
+    .tag {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.66rem;
+      padding: 3px 9px;
+      border: 1px solid rgba(0,240,255,0.2);
+      color: var(--accent);
+      letter-spacing: 0.06em;
+    }
+
+    /* ─── PROJECT ─── */
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 0;
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s;
+      position: relative;
+    }
+
+    .project-card:hover {
+      border-color: rgba(0,240,255,0.3);
+      transform: translateY(-6px);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.4), 0 0 30px rgba(0,240,255,0.06);
+    }
+
+    .project-header {
+      background: linear-gradient(135deg, #0a1f30 0%, #091525 100%);
+      padding: 32px 32px 24px;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+
+    .project-header::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(to right, var(--accent), transparent 60%);
+    }
+
+    .project-status {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.65rem;
+      color: #00ff9d;
+      letter-spacing: 0.15em;
+      margin-bottom: 16px;
+    }
+
+    .status-dot {
+      width: 7px; height: 7px;
+      background: #00ff9d;
+      border-radius: 50%;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(0,255,157,0.5); }
+      50% { box-shadow: 0 0 0 6px rgba(0,255,157,0); }
+    }
+
+    .project-title {
+      font-size: 1.4rem;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .project-body {
+      padding: 28px 32px 32px;
+    }
+
+    .project-desc {
+      font-size: 0.92rem;
+      color: #7a9ab0;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+
+    .attack-chain {
+      margin-bottom: 24px;
+    }
+
+    .chain-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--muted);
+      letter-spacing: 0.15em;
+      margin-bottom: 12px;
+    }
+
+    .chain-steps {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
+    }
+
+    .chain-step {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.72rem;
+      padding: 5px 10px;
+      background: rgba(0,240,255,0.06);
+      border: 1px solid rgba(0,240,255,0.15);
+      color: var(--accent);
+    }
+
+    .chain-arrow {
+      color: var(--muted);
+      font-size: 0.75rem;
+    }
+
+    .tools-row {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin-top: 16px;
+    }
+
+    .tool-pill {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem;
+      padding: 4px 12px;
+      background: rgba(255,62,108,0.08);
+      border: 1px solid rgba(255,62,108,0.2);
+      color: var(--accent2);
+    }
+
+    .project-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      margin-top: 24px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--accent);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      border-bottom: 1px solid rgba(0,240,255,0.3);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .project-link:hover { color: #fff; border-color: #fff; }
+
+    /* ─── ENV TABLE ─── */
+    .env-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.82rem;
+      margin-top: 20px;
+    }
+
+    .env-table th {
+      text-align: left;
+      padding: 10px 16px;
+      color: var(--accent);
+      border-bottom: 1px solid var(--border);
+      letter-spacing: 0.1em;
+      font-size: 0.72rem;
+    }
+
+    .env-table td {
+      padding: 10px 16px;
+      border-bottom: 1px solid rgba(13,34,51,0.8);
+      color: var(--text);
+    }
+
+    .env-table tr:hover td {
+      background: rgba(0,240,255,0.03);
+    }
+
+    /* ─── CONTACT ─── */
+    .contact-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 56px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-box::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(to right, transparent, var(--accent), transparent);
+    }
+
+    .contact-box h2 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .contact-box p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 36px;
+    }
+
+    .contact-links {
+      display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 8vw;
+      background: rgba(5,10,14,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0,240,255,0.05);
+    }
+
+    .nav-logo {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.9rem;
+      color: var(--accent);
+      letter-spacing: 0.15em;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex; gap: 32px; list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      text-align: center;
+      padding: 32px 8vw;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      position: relative;
+      z-index: 3;
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Terminal block */
+    .terminal {
+      background: #020c12;
+      border: 1px solid var(--border);
+      padding: 20px 24px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.8rem;
+      line-height: 1.8;
+      margin-top: 32px;
+      position: relative;
+    }
+
+    .terminal::before {
+      content: '● ● ●';
+      position: absolute; top: 10px; left: 16px;
+      font-size: 0.6rem;
+      color: var(--muted);
+      letter-spacing: 4px;
+    }
+
+    .terminal-inner { margin-top: 14px; }
+    .t-prompt { color: var(--accent2); }
+    .t-cmd { color: var(--accent); }
+    .t-out { color: #5a8070; }
+    .t-ok { color: #00ff9d; }
+
+    /* section divider */
+    .sec-line {
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--border), transparent);
+      margin: 0 8vw;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#">[DJE_YOBOUE]</a>
+    <ul class="nav-links">
+      <li><a href="#skills">// skills</a></li>
+      <li><a href="#projects">// projets</a></li>
+      <li><a href="#contact">// contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <header>
+    <div class="grid-bg"></div>
+
+    <svg class="hex-decoration" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="50,2 93,26 93,74 50,98 7,74 7,26" stroke="#00f0ff" stroke-width="1" fill="none"/>
+      <polygon points="50,12 83,30 83,70 50,88 17,70 17,30" stroke="#00f0ff" stroke-width="0.5" fill="none"/>
+      <polygon points="50,22 73,34 73,66 50,78 27,66 27,34" stroke="#00f0ff" stroke-width="0.3" fill="none"/>
+      <circle cx="50" cy="50" r="6" stroke="#00f0ff" stroke-width="0.5" fill="none"/>
+      <line x1="50" y1="2" x2="50" y2="22" stroke="#00f0ff" stroke-width="0.3"/>
+      <line x1="93" y1="26" x2="73" y2="34" stroke="#00f0ff" stroke-width="0.3"/>
+      <line x1="93" y1="74" x2="73" y2="66" stroke="#00f0ff" stroke-width="0.3"/>
+      <line x1="50" y1="98" x2="50" y2="78" stroke="#00f0ff" stroke-width="0.3"/>
+      <line x1="7" y1="74" x2="27" y2="66" stroke="#00f0ff" stroke-width="0.3"/>
+      <line x1="7" y1="26" x2="27" y2="34" stroke="#00f0ff" stroke-width="0.3"/>
+    </svg>
+
+    <div class="badge">CYBERSECURITY STUDENT &amp; RESEARCHER</div>
+
+    <h1 class="hero-name">YOBOUE<br /><span>DJE</span></h1>
+
+    <p class="hero-title">
+      Pentest Interne &nbsp;/&nbsp; Active Directory &nbsp;/&nbsp;
+      <span class="typing">Sécurité Offensive</span>
+    </p>
+
+    <p class="hero-desc">
+      Étudiant passionné en cybersécurité, spécialisé dans les attaques
+      et la défense des infrastructures Active Directory. Je conçois des labs
+      réalistes pour comprendre les techniques offensives et construire des
+      contre-mesures efficaces.
+    </p>
+
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#projects">Voir mes projets</a>
+      <a class="btn btn-outline" href="https://github.com/djeyoboue44-glitch" target="_blank">GitHub ↗</a>
+    </div>
+
+    <div class="scroll-hint">
+      <div class="scroll-line"></div>
+      SCROLL
+    </div>
+  </header>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-label">compétences</div>
+    <h2 class="section-title">Domaines d'expertise</h2>
+    <div class="divider"></div>
+
+    <div class="skills-grid">
+      <div class="skill-card fade-in">
+        <span class="skill-icon">🏴</span>
+        <div class="skill-name">Pentest Active Directory</div>
+        <div class="skill-desc">Simulation d'attaques complètes sur des environnements AD : énumération, exploitation, post-exploitation.</div>
+        <div class="skill-tags">
+          <span class="tag">LDAP</span>
+          <span class="tag">SMB</span>
+          <span class="tag">Kerberos</span>
+        </div>
+      </div>
+
+      <div class="skill-card fade-in">
+        <span class="skill-icon">🔓</span>
+        <div class="skill-name">Credential Attacks</div>
+        <div class="skill-desc">Capture de hashes NTLMv2, craquage de mots de passe avec Hashcat et John, extraction de credentials.</div>
+        <div class="skill-tags">
+          <span class="tag">Hashcat</span>
+          <span class="tag">John</span>
+          <span class="tag">NTLMv2</span>
+        </div>
+      </div>
+
+      <div class="skill-card fade-in">
+        <span class="skill-icon">📡</span>
+        <div class="skill-name">LLMNR / NBNS Poisoning</div>
+        <div class="skill-desc">Interception de requêtes réseau via Responder pour capturer des hashes en position d'homme du milieu.</div>
+        <div class="skill-tags">
+          <span class="tag">Responder</span>
+          <span class="tag">Poisoning</span>
+          <span class="tag">MitM</span>
+        </div>
+      </div>
+
+      <div class="skill-card fade-in">
+        <span class="skill-icon">🦇</span>
+        <div class="skill-name">Post-Exploitation</div>
+        <div class="skill-desc">Extraction de credentials en mémoire, mouvement latéral, analyse des privilèges Active Directory.</div>
+        <div class="skill-tags">
+          <span class="tag">Mimikatz</span>
+          <span class="tag">BloodHound</span>
+          <span class="tag">Privilege Esc</span>
+        </div>
+      </div>
+
+      <div class="skill-card fade-in">
+        <span class="skill-icon">🔍</span>
+        <div class="skill-name">Enumération Réseau</div>
+        <div class="skill-desc">Reconnaissance et cartographie des services, partages et utilisateurs sur les réseaux internes.</div>
+        <div class="skill-tags">
+          <span class="tag">Nmap</span>
+          <span class="tag">CrackMapExec</span>
+          <span class="tag">SMB Enum</span>
+        </div>
+      </div>
+
+      <div class="skill-card fade-in">
+        <span class="skill-icon">🖥️</span>
+        <div class="skill-name">Infrastructure Lab</div>
+        <div class="skill-desc">Déploiement d'environnements Windows Server 2022 / Kali Linux sous VMware pour des simulations réalistes.</div>
+        <div class="skill-tags">
+          <span class="tag">VMware</span>
+          <span class="tag">Win Server 2022</span>
+          <span class="tag">Kali Linux</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="terminal fade-in">
+      <div class="terminal-inner">
+        <div><span class="t-prompt">kali@attacker</span>:<span class="t-cmd">~$</span> crackmapexec smb 192.168.1.0/24 -u '' -p ''</div>
+        <div class="t-out">SMB   192.168.1.10   445  DC01  [*] Windows Server 2022 x64</div>
+        <div class="t-out">SMB   192.168.1.20   445  WS01  [*] Windows 10.0 Build 19041</div>
+        <div class="t-ok">SMB   192.168.1.10   445  DC01  [+] &lt;domain&gt;\ (Pwn3d!)</div>
+        <div><span class="t-prompt">kali@attacker</span>:<span class="t-cmd">~$</span> <span style="border-right:2px solid #00f0ff;animation:blink 0.8s step-end infinite">&nbsp;</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="sec-line"></div>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-label">projets</div>
+    <h2 class="section-title">Travaux réalisés</h2>
+    <div class="divider"></div>
+
+    <div class="project-card fade-in">
+      <div class="project-header">
+        <div class="project-status">
+          <div class="status-dot"></div>
+          LAB OPÉRATIONNEL
+        </div>
+        <div class="project-title">Lab Pentest Active Directory<br />— Simulation d'attaque complète</div>
+      </div>
+      <div class="project-body">
+        <p class="project-desc">
+          Laboratoire personnel déployé sous VMware simulant un environnement d'entreprise réel avec
+          un contrôleur de domaine Windows Server 2022 et un poste client. Objectif : reproduire les
+          techniques d'attaque courantes contre Active Directory et en comprendre les mécanismes de défense.
+        </p>
+
+        <div class="attack-chain">
+          <div class="chain-label">KILL CHAIN SIMULÉE</div>
+          <div class="chain-steps">
+            <span class="chain-step">Reconnaissance</span>
+            <span class="chain-arrow">→</span>
+            <span class="chain-step">Enum LDAP/SMB</span>
+            <span class="chain-arrow">→</span>
+            <span class="chain-step">LLMNR Poison</span>
+            <span class="chain-arrow">→</span>
+            <span class="chain-step">Hash NTLMv2</span>
+            <span class="chain-arrow">→</span>
+            <span class="chain-step">Crack Password</span>
+            <span class="chain-arrow">→</span>
+            <span class="chain-step">Mimikatz</span>
+            <span class="chain-arrow">→</span>
+            <span class="chain-step">Domain Admin</span>
+          </div>
+        </div>
+
+        <table class="env-table">
+          <thead>
+            <tr>
+              <th>MACHINE</th>
+              <th>RÔLE</th>
+              <th>OS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>DC01</td>
+              <td>Contrôleur de domaine</td>
+              <td>Windows Server 2022</td>
+            </tr>
+            <tr>
+              <td>WS01</td>
+              <td>Poste client</td>
+              <td>Windows 10/11</td>
+            </tr>
+            <tr>
+              <td>KALI</td>
+              <td>Machine attaquante</td>
+              <td>Kali Linux</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="tools-row">
+          <span class="tool-pill">BloodHound</span>
+          <span class="tool-pill">CrackMapExec</span>
+          <span class="tool-pill">Responder</span>
+          <span class="tool-pill">Mimikatz</span>
+          <span class="tool-pill">Hashcat</span>
+          <span class="tool-pill">John the Ripper</span>
+          <span class="tool-pill">Wireshark</span>
+          <span class="tool-pill">Nmap</span>
+        </div>
+
+        <a class="project-link" href="https://github.com/djeyoboue44-glitch/lab-pentest-active-director" target="_blank">
+          → Voir le repo complet sur GitHub
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="sec-line"></div>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-box fade-in">
+      <h2>Entrons en contact</h2>
+      <p>Étudiant en cybersécurité à la recherche d'opportunités — stage, alternance ou collaboration.</p>
+      <div class="contact-links">
+        <a class="btn btn-primary" href="https://github.com/djeyoboue44-glitch" target="_blank">↗ GitHub</a>
+        <a class="btn btn-outline" href="mailto:djeyoboue44@gmail.com">✉ Email</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span style="color:var(--accent)">YOBOUE DJE</span> &nbsp;|&nbsp;
+    Étudiant Cybersécurité &nbsp;|&nbsp;
+    91420 &nbsp;|&nbsp;
+    <a href="https://github.com/djeyoboue44-glitch" style="color:var(--muted);text-decoration:none" target="_blank">github.com/djeyoboue44-glitch</a>
+  </footer>
+
+  <script>
+    // Custom cursor
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+      setTimeout(() => {
+        ring.style.left = e.clientX + 'px';
+        ring.style.top = e.clientY + 'px';
+      }, 60);
+    });
+
+    // Intersection observer for fade-in
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) e.target.classList.add('visible');
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Typing effect
+    const titles = ['Sécurité Offensive', 'Pentest AD', 'Ethical Hacking', 'Red Team'];
+    let ti = 0, ci = 0, deleting = false;
+    const typingEl = document.querySelector('.typing');
+    function type() {
+      const word = titles[ti];
+      if (!deleting) {
+        typingEl.textContent = word.slice(0, ++ci);
+        if (ci === word.length) { deleting = true; setTimeout(type, 1800); return; }
+      } else {
+        typingEl.textContent = word.slice(0, --ci);
+        if (ci === 0) { deleting = false; ti = (ti + 1) % titles.length; }
+      }
+      setTimeout(type, deleting ? 60 : 90);
+    }
+    type();
+  </script>
+</body>
+</html>
