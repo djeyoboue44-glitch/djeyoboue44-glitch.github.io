@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>YOBOUE DJE | Cybersécurité & Infrastructures</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+<title>DJE YOBOUE | Cybersécurité • Infrastructures • Réseaux</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
@@ -25,7 +26,7 @@ body{
   color:var(--text);
 }
 
-/* GRID ANIMÉ */
+/* BACKGROUND GRID */
 body::before{
   content:"";
   position:fixed;
@@ -34,11 +35,11 @@ body::before{
     linear-gradient(rgba(0,217,255,.05) 1px, transparent 1px),
     linear-gradient(90deg, rgba(0,255,157,.05) 1px, transparent 1px);
   background-size:50px 50px;
-  animation:moveGrid 10s linear infinite;
+  animation:gridMove 14s linear infinite;
   z-index:-2;
 }
 
-@keyframes moveGrid{
+@keyframes gridMove{
   from{transform:translateY(0);}
   to{transform:translateY(50px);}
 }
@@ -50,16 +51,17 @@ nav{
   display:flex;
   justify-content:space-between;
   padding:18px 8%;
+  background:rgba(5,7,13,.75);
   backdrop-filter:blur(12px);
-  background:rgba(5,7,13,.7);
   border-bottom:1px solid rgba(255,255,255,.05);
   z-index:1000;
 }
 
 nav a{
   color:var(--muted);
-  margin-left:20px;
+  margin-left:18px;
   text-decoration:none;
+  font-size:.95rem;
 }
 
 nav a:hover{color:var(--accent);}
@@ -67,81 +69,88 @@ nav a:hover{color:var(--accent);}
 .logo{
   font-family:Orbitron;
   color:var(--accent);
+  font-weight:700;
 }
 
-/* HERO */
-section{padding:100px 8%;}
-
-.hero{
-  min-height:100vh;
+/* SECTIONS */
+section{
+  padding:110px 8%;
+  opacity:0;
+  transform:translateY(20px);
+  transition:1s ease;
 }
 
+section.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* TITRES */
 h1{
-  font-size:4.5rem;
+  font-size:4.6rem;
   font-family:Orbitron;
 }
 
 h1 span{
   color:var(--accent);
-  text-shadow:0 0 20px var(--accent);
+  text-shadow:0 0 25px var(--accent);
 }
 
-h2{color:var(--muted);font-weight:500;margin-top:10px;}
+h2{
+  font-size:2rem;
+  margin-bottom:20px;
+}
 
-p{color:#cbd5e1;line-height:1.7;margin-top:15px;max-width:900px;}
+p{
+  color:#cbd5e1;
+  line-height:1.9;
+}
+
+/* BADGE */
+.badge{
+  display:inline-block;
+  margin-top:15px;
+  padding:10px 14px;
+  border-radius:10px;
+  background:rgba(0,217,255,.08);
+  border:1px solid rgba(0,217,255,.25);
+  color:var(--accent);
+  font-weight:600;
+}
 
 /* TERMINAL */
 .terminal{
+  margin-top:25px;
+  padding:18px;
+  border-radius:12px;
   background:#0b1220;
-  border:1px solid rgba(0,217,255,.3);
-  padding:15px;
-  border-radius:10px;
+  border:1px solid rgba(0,217,255,.25);
   font-family:monospace;
-  margin-top:20px;
-  box-shadow:0 0 20px rgba(0,217,255,.1);
 }
 
-/* BUTTONS */
-.btns{display:flex;gap:12px;margin-top:25px;flex-wrap:wrap;}
-
-.btn{
-  padding:12px 18px;
-  border-radius:10px;
-  text-decoration:none;
-}
-
-.primary{
-  background:linear-gradient(90deg,var(--accent),var(--accent2));
-  color:#000;
-}
-
-.secondary{
-  border:1px solid rgba(255,255,255,.15);
-  color:var(--text);
-}
-
-/* GRID CARDS */
+/* GRID */
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:18px;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:20px;
 }
 
+/* CARD */
 .card{
   background:var(--card);
   border:1px solid rgba(255,255,255,.08);
-  padding:20px;
   border-radius:14px;
+  padding:22px;
   transition:.3s;
 }
 
 .card:hover{
   transform:translateY(-6px);
   border-color:var(--accent);
-  box-shadow:0 0 25px rgba(0,217,255,.1);
+  box-shadow:0 0 30px rgba(0,217,255,.12);
 }
 
-/* TAGS */
+/* TAG */
 .tag{
   display:inline-block;
   padding:6px 10px;
@@ -153,44 +162,15 @@ p{color:#cbd5e1;line-height:1.7;margin-top:15px;max-width:900px;}
   color:var(--accent);
 }
 
-/* GLITCH TITLE */
-h1{
-  position:relative;
+/* CONTACT */
+.contact-box{
+  background:linear-gradient(145deg,#0f1724,#0b1220);
+  border:1px solid rgba(0,217,255,.2);
+  padding:25px;
+  border-radius:15px;
 }
 
-h1::before,
-h1::after{
-  content:"YOBOUE DJE";
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  opacity:.2;
-}
-
-h1::before{
-  color:var(--accent);
-  animation:glitch 2s infinite;
-}
-
-h1::after{
-  color:var(--accent2);
-  animation:glitch2 2s infinite;
-}
-
-@keyframes glitch{
-  0%{transform:translate(0);}
-  25%{transform:translate(-2px,1px);}
-  50%{transform:translate(2px,-1px);}
-  100%{transform:translate(0);}
-}
-
-@keyframes glitch2{
-  0%{transform:translate(0);}
-  50%{transform:translate(2px,2px);}
-  100%{transform:translate(0);}
-}
-
+/* FOOTER */
 footer{
   text-align:center;
   padding:30px;
@@ -208,47 +188,75 @@ footer{
     <a href="#about">À propos</a>
     <a href="#skills">Compétences</a>
     <a href="#projects">Projets</a>
+    <a href="#experience">Expérience</a>
     <a href="#contact">Contact</a>
   </div>
 </nav>
 
-<section class="hero">
+<!-- HERO -->
+<section class="show">
 
-<h1>YOBOUE <span>DJE</span></h1>
+<h1>DJE <span>YOBOUE</span></h1>
 
-<h2>Cybersécurité • Réseaux • Systèmes • Dev</h2>
+<h2>Cybersécurité • Réseaux • Systèmes • Infrastructure • Dev</h2>
+
+<div class="badge">
+🎓 Alternance : 3 semaines entreprise / 1 semaine école
+</div>
 
 <p>
-Étudiant en Mastère Expert IT (IRIS Paris), profil hybride orienté cybersécurité, infrastructures et systèmes.
-Je travaille sur des environnements virtualisés pour simuler attaques, sécuriser infrastructures et analyser des systèmes complexes.
+Étudiant en Mastère Expert IT (IRIS Paris), avec un profil hybride orienté infrastructures,
+cybersécurité et systèmes réseaux.
+
+Je travaille sur des environnements virtualisés afin de reproduire des architectures réelles
+et comprendre les mécanismes de sécurité, d’attaque et de défense.
 </p>
 
 <div class="terminal">
-root@lab:~$ whoami<br>
-cybersecurity-student<br><br>
+root@system:~$ identity<br>
+Dje - Étudiant IT cybersécurité & infra<br><br>
 
-root@lab:~$ focus<br>
-SOC | Infra | Pentest | Dev<br><br>
+root@system:~$ focus<br>
+Cybersecurity | Network | Systems | Dev<br><br>
 
-root@lab:~$ status<br>
-Searching alternance (3 semaines entreprise / 1 semaine école)<br>
-</div>
-
-<div class="btns">
-<a class="btn primary" href="#projects">Projets</a>
-<a class="btn secondary" href="mailto:djeyoboue44@gmail.com">Contact</a>
+root@system:~$ status<br>
+Recherche alternance active - Île-de-France<br>
 </div>
 
 </section>
 
+<!-- ABOUT -->
 <section id="about">
-<h2>À propos</h2>
+
+<h2>À propos de moi</h2>
+
 <p>
-Profil hybride en cybersécurité, réseaux et infrastructures.
-Objectif : évoluer dans des environnements variés (SOC, SecOps, admin systèmes, sécurité cloud).
+Je suis passionné par les systèmes informatiques et la cybersécurité.
+Mon objectif est de comprendre les infrastructures IT dans leur globalité :
+réseaux, serveurs, sécurité, applications et automatisation.
+
+<br><br>
+
+J’ai développé des compétences techniques à travers des labs personnels :
+Active Directory, Windows Server, Linux, SIEM et outils de pentest.
+
+<br><br>
+
+Je suis capable d’intervenir sur plusieurs couches d’un système :
+- infrastructure réseau
+- administration système
+- sécurité des environnements
+- analyse de logs et incidents
+
+<br><br>
+
+📍 Permis B — mobilité Île-de-France<br>
+🏛️ Membre actif JCI (Jeune Chambre Internationale)
 </p>
+
 </section>
 
+<!-- SKILLS -->
 <section id="skills">
 
 <h2>Compétences techniques</h2>
@@ -257,97 +265,147 @@ Objectif : évoluer dans des environnements variés (SOC, SecOps, admin système
 
 <div class="card">
 <h3>Cybersécurité</h3>
-<p>MITRE ATT&CK, analyse logs, incident response, détection anomalies</p>
+<p>Analyse et réponse aux incidents</p>
+<span class="tag">MITRE ATT&CK</span>
 <span class="tag">Blue Team</span>
-<span class="tag">MITRE</span>
 <span class="tag">Triage</span>
+<span class="tag">SOC</span>
 </div>
 
 <div class="card">
 <h3>Réseaux & Systèmes</h3>
-<p>TCP/IP, VLAN, DNS, DHCP, Windows Server, HA</p>
-<span class="tag">Cisco</span>
+<p>Administration et architecture IT</p>
+<span class="tag">TCP/IP</span>
+<span class="tag">VLAN</span>
+<span class="tag">DNS</span>
+<span class="tag">DHCP</span>
 <span class="tag">Windows Server</span>
 <span class="tag">PowerShell</span>
 </div>
 
 <div class="card">
 <h3>SIEM & Monitoring</h3>
-<p>ELK Stack, logs, détection, Wireshark, Snort</p>
-<span class="tag">ELK</span>
+<p>Supervision et analyse logs</p>
+<span class="tag">ELK Stack</span>
 <span class="tag">Kibana</span>
 <span class="tag">Wireshark</span>
+<span class="tag">Snort</span>
 </div>
 
 <div class="card">
-<h3>Pentest AD</h3>
-<p>Kerberos, NTLM, exploitation AD, reconnaissance</p>
+<h3>Offensive Security</h3>
+<p>Pentest et Active Directory</p>
 <span class="tag">Mimikatz</span>
 <span class="tag">BloodHound</span>
 <span class="tag">Nmap</span>
+<span class="tag">Hashcat</span>
 </div>
 
 <div class="card">
 <h3>Virtualisation</h3>
-<p>Labs, VM, cloud, environnements sécurisés</p>
+<p>Environnements de test</p>
 <span class="tag">VMware</span>
-<span class="tag">Kali</span>
-<span class="tag">AWS</span>
+<span class="tag">VirtualBox</span>
+<span class="tag">Kali Linux</span>
 </div>
 
 <div class="card">
 <h3>Développement</h3>
-<p>Scripts, web, automatisation</p>
+<p>Automatisation et scripts</p>
 <span class="tag">Python</span>
 <span class="tag">SQL</span>
 <span class="tag">HTML/CSS</span>
 </div>
 
 </div>
+
 </section>
 
-<section id="projects">
+<!-- EXPERIENCE -->
+<section id="experience">
 
-<h2>Projets & expériences</h2>
+<h2>Expériences & Projets</h2>
 
 <div class="grid">
 
 <div class="card">
-<h3>Lab Active Directory</h3>
-<p>Simulation d’attaque interne et durcissement AD sous VMware</p>
+<h3>Active Directory Lab</h3>
+<p>
+Simulation d’une infrastructure entreprise complète avec gestion utilisateurs,
+groupes, GPO et tests de sécurité interne.
+</p>
 </div>
 
 <div class="card">
 <h3>SIEM ELK Stack</h3>
-<p>Centralisation logs + dashboards + détection d’incidents</p>
+<p>
+Centralisation des logs et création de dashboards de supervision en temps réel.
+</p>
 </div>
 
 <div class="card">
 <h3>Analyse réseau</h3>
-<p>Wireshark + Snort pour détection de trafic suspect</p>
+<p>
+Détection de trafic suspect et analyse de paquets réseau avec Wireshark et Snort.
+</p>
 </div>
 
 <div class="card">
 <h3>Infrastructure réseau</h3>
-<p>VLAN, DHCP, DNS, firewall sur environnement simulé</p>
+<p>
+Conception VLAN, DNS, DHCP et firewall sur environnement Windows Server + Cisco.
+</p>
 </div>
 
 </div>
+
 </section>
 
+<!-- CONTACT -->
 <section id="contact">
-<h2>Contact</h2>
-<p>Disponible pour alternance cybersécurité / infrastructure / secops</p>
 
-<div class="btns">
-<a class="btn primary" href="mailto:djeyoboue44@gmail.com">Email</a>
-<a class="btn secondary" href="#">LinkedIn</a>
+<h2>Contact</h2>
+
+<div class="contact-box">
+
+<p><strong>Email :</strong> djeyoboue44@gmail.com</p>
+<p><strong>Téléphone :</strong> 06 14 33 03 23</p>
+<p><strong>Permis :</strong> B</p>
+<p><strong>Localisation :</strong> Île-de-France</p>
+<p><strong>Association :</strong> JCI</p>
+<p><strong>Alternance :</strong> 3 semaines entreprise / 1 semaine école</p>
+
 </div>
+
+</section>
+
+<!-- CENTRES D’INTÉRÊT -->
+<section>
+
+<h2>Centres d’intérêt</h2>
+
+<p>
+Cybersécurité, infrastructures IT, réseaux, virtualisation, veille technologique,
+projets personnels, JCI, travail en équipe, résolution de problèmes et amélioration continue.
+</p>
+
 </section>
 
 <footer>
-© 2026 YOBOUE DJE — Portfolio IT Cyber
+© 2026 YOBOUE DJE — Portfolio IT & Cybersécurité
 </footer>
+
+<script>
+const sections=document.querySelectorAll("section");
+
+window.addEventListener("scroll",()=>{
+  sections.forEach(sec=>{
+    if(sec.getBoundingClientRect().top < window.innerHeight-80){
+      sec.classList.add("show");
+    }
+  });
+});
+</script>
 
 </body>
 </html>
