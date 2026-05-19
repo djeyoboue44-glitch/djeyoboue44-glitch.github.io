@@ -1,464 +1,961 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>DJE YOBOUE | Cybersécurité • Réseaux • Systèmes • Infrastructure</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
-
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>YOBOUE DJE — Cybersecurity Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;700&family=Bebas+Neue&display=swap" rel="stylesheet"/>
 <style>
 :root{
-  --bg:#05070d;
-  --card:#0f1724;
-  --accent:#00d9ff;
-  --accent2:#00ff9d;
-  --text:#e6f1ff;
-  --muted:#8aa0b5;
+  --void:#020508;
+  --deep:#060d14;
+  --panel:#091523;
+  --wire:#0d2035;
+  --cyan:#00f5ff;
+  --lime:#39ff14;
+  --red:#ff2254;
+  --amber:#ffb800;
+  --text:#b8d4e8;
+  --dim:#3a5568;
+  --glow-c:0 0 20px rgba(0,245,255,.35),0 0 60px rgba(0,245,255,.1);
+  --glow-l:0 0 20px rgba(57,255,20,.3),0 0 50px rgba(57,255,20,.08);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--void);
+  color:var(--text);
+  font-family:'Rajdhani',sans-serif;
+  overflow-x:hidden;
+  cursor:none;
 }
 
-*{margin:0;padding:0;box-sizing:border-box;scroll-behavior:smooth;}
+/* ══════════════════════ CURSOR ══════════════════════ */
+#cur{position:fixed;width:8px;height:8px;background:var(--cyan);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .05s;mix-blend-mode:screen;}
+#cur2{position:fixed;width:28px;height:28px;border:1px solid rgba(0,245,255,.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform .12s;}
 
-body{
-  font-family:Inter;
-  background:var(--bg);
+/* ══════════════════════ CANVAS BG ══════════════════════ */
+#matrix-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-3;opacity:.06;}
+
+/* ══════════════════════ NOISE ══════════════════════ */
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:-1;
+}
+
+/* ══════════════════════ SCANLINES ══════════════════════ */
+body::after{
+  content:'';position:fixed;inset:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,245,255,.008) 3px,rgba(0,245,255,.008) 4px);
+  pointer-events:none;z-index:0;
+}
+
+/* ══════════════════════ NAV ══════════════════════ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 5vw;height:58px;
+  background:rgba(2,5,8,.92);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(0,245,255,.08);
+}
+.nav-id{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.75rem;font-weight:500;
+  color:var(--cyan);letter-spacing:.15em;
+}
+.nav-id span{color:var(--dim);}
+.nav-links{display:flex;gap:0;list-style:none;}
+.nav-links a{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.65rem;letter-spacing:.12em;
+  color:var(--dim);text-decoration:none;
+  padding:0 16px;height:58px;display:flex;align-items:center;
+  border-left:1px solid rgba(255,255,255,.04);
+  transition:color .2s,background .2s;
+  text-transform:uppercase;
+}
+.nav-links a:hover{color:var(--cyan);background:rgba(0,245,255,.04);}
+.nav-status{
+  display:flex;align-items:center;gap:8px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.6rem;letter-spacing:.15em;color:var(--lime);
+}
+.status-pulse{width:6px;height:6px;background:var(--lime);border-radius:50%;animation:statusBlink 2s ease-in-out infinite;}
+@keyframes statusBlink{0%,100%{opacity:1;box-shadow:0 0 6px var(--lime);}50%{opacity:.3;box-shadow:none;}}
+
+/* ══════════════════════ HERO ══════════════════════ */
+#hero{
+  position:relative;min-height:100vh;
+  display:grid;grid-template-columns:1fr 1fr;
+  align-items:center;
+  padding:58px 5vw 0;
+  overflow:hidden;
+}
+
+/* Left panel */
+.hero-left{padding-right:4vw;position:relative;z-index:2;}
+
+.hero-eyebrow{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.65rem;letter-spacing:.3em;
+  color:var(--cyan);opacity:.7;
+  display:flex;align-items:center;gap:12px;
+  margin-bottom:28px;
+  animation:fadeUp .8s ease both;
+}
+.hero-eyebrow::before{content:'';width:32px;height:1px;background:var(--cyan);}
+
+.hero-name{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(5rem,9vw,9rem);
+  line-height:.9;letter-spacing:.02em;
+  animation:fadeUp .8s ease .1s both;
+}
+.hero-name .line1{color:var(--text);}
+.hero-name .line2{
+  color:transparent;
+  -webkit-text-stroke:2px var(--cyan);
+  text-shadow:var(--glow-c);
+}
+
+.hero-title{
+  font-family:'Rajdhani',sans-serif;
+  font-size:clamp(1rem,1.8vw,1.4rem);
+  font-weight:300;letter-spacing:.25em;
+  color:var(--dim);text-transform:uppercase;
+  margin-top:20px;
+  animation:fadeUp .8s ease .2s both;
+}
+
+.hero-bio{
+  max-width:480px;
+  font-size:1.05rem;line-height:1.75;
+  color:#7a9ab0;margin-top:28px;
+  animation:fadeUp .8s ease .3s both;
+}
+.hero-bio strong{color:var(--cyan);}
+
+/* Stats row */
+.hero-stats{
+  display:flex;gap:0;margin-top:40px;
+  border:1px solid var(--wire);
+  animation:fadeUp .8s ease .4s both;
+}
+.hstat{
+  flex:1;padding:18px 20px;
+  border-right:1px solid var(--wire);
+  position:relative;overflow:hidden;
+}
+.hstat:last-child{border-right:none;}
+.hstat::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(to right,var(--cyan),transparent);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .4s ease;
+}
+.hstat:hover::before{transform:scaleX(1);}
+.hstat-n{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:2.2rem;color:var(--cyan);
+  line-height:1;
+}
+.hstat-l{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.58rem;letter-spacing:.12em;color:var(--dim);
+  margin-top:3px;
+}
+
+/* CTA */
+.hero-cta{
+  display:flex;gap:12px;margin-top:36px;flex-wrap:wrap;
+  animation:fadeUp .8s ease .5s both;
+}
+.cta{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.72rem;letter-spacing:.1em;
+  text-decoration:none;padding:12px 24px;
+  transition:all .25s;text-transform:uppercase;
+  clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));
+}
+.cta-primary{background:var(--cyan);color:var(--void);font-weight:700;}
+.cta-primary:hover{background:#fff;box-shadow:var(--glow-c);}
+.cta-ghost{background:transparent;color:var(--cyan);border:1px solid rgba(0,245,255,.35);}
+.cta-ghost:hover{background:rgba(0,245,255,.07);}
+.cta-ghost2{background:transparent;color:var(--red);border:1px solid rgba(255,34,84,.3);}
+.cta-ghost2:hover{background:rgba(255,34,84,.07);}
+
+/* Right panel — RADAR */
+.hero-right{
+  position:relative;display:flex;
+  align-items:center;justify-content:center;
+  animation:fadeIn 1.2s ease .6s both;
+}
+.radar-wrap{position:relative;width:min(420px,40vw);aspect-ratio:1;}
+.radar-svg{width:100%;height:100%;}
+
+/* ══════════════════════ SCROLL HINT ══════════════════════ */
+.scroll-hint{
+  position:absolute;bottom:36px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  font-family:'JetBrains Mono',monospace;font-size:.58rem;
+  color:var(--dim);letter-spacing:.2em;
+  animation:fadeIn 2s ease 2s both;
+}
+.scroll-bar{width:1px;height:40px;background:linear-gradient(to bottom,var(--cyan),transparent);animation:scrollAnim 2s ease-in-out infinite;}
+@keyframes scrollAnim{0%,100%{opacity:.3;}50%{opacity:1;}}
+
+/* ══════════════════════ SECTIONS ══════════════════════ */
+section{position:relative;padding:100px 5vw;z-index:2;}
+.sec-header{margin-bottom:56px;}
+.sec-num{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.65rem;letter-spacing:.25em;color:var(--cyan);opacity:.5;
+  margin-bottom:8px;
+}
+.sec-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(2.5rem,5vw,4.5rem);
+  line-height:.95;letter-spacing:.04em;
   color:var(--text);
 }
+.sec-title em{
+  color:transparent;
+  -webkit-text-stroke:1px var(--cyan);
+  font-style:normal;
+}
+.sec-rule{width:80px;height:1px;background:linear-gradient(to right,var(--cyan),transparent);margin-top:16px;}
 
-/* GRID BACKGROUND */
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:
-    linear-gradient(rgba(0,217,255,.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,255,157,.05) 1px, transparent 1px);
-  background-size:50px 50px;
-  animation:gridMove 14s linear infinite;
-  z-index:-2;
+.sec-divider{height:1px;background:linear-gradient(to right,transparent,var(--wire),transparent);margin:0 5vw;}
+
+/* ══════════════════════ TIMELINE ══════════════════════ */
+.timeline{position:relative;padding-left:40px;}
+.timeline::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;
+  width:1px;background:linear-gradient(to bottom,var(--cyan),var(--wire),transparent);
+}
+.tl-item{
+  position:relative;margin-bottom:48px;
+  animation:fadeUp .7s ease both;
+}
+.tl-item::before{
+  content:'';position:absolute;left:-44px;top:6px;
+  width:8px;height:8px;background:var(--cyan);
+  clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%);
+}
+.tl-meta{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.62rem;letter-spacing:.15em;
+  color:var(--cyan);margin-bottom:8px;opacity:.7;
+}
+.tl-title{
+  font-size:1.25rem;font-weight:700;letter-spacing:.05em;
+  color:var(--text);margin-bottom:4px;
+}
+.tl-org{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.68rem;color:var(--dim);letter-spacing:.1em;
+  margin-bottom:14px;
+}
+.tl-pts{list-style:none;display:flex;flex-direction:column;gap:5px;}
+.tl-pts li{
+  font-size:.95rem;color:#6a8fa8;line-height:1.6;
+  padding-left:16px;position:relative;
+}
+.tl-pts li::before{content:'▸';position:absolute;left:0;color:var(--cyan);font-size:.7rem;}
+
+/* ══════════════════════ SKILL MATRIX ══════════════════════ */
+.matrix-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:2px;background:var(--wire);}
+.matrix-cell{
+  background:var(--deep);
+  padding:28px;
+  position:relative;overflow:hidden;
+  transition:background .3s;
+}
+.matrix-cell:hover{background:var(--panel);}
+.matrix-cell::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:linear-gradient(to right,var(--cyan),transparent);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .35s;
+}
+.matrix-cell:hover::after{transform:scaleX(1);}
+.mc-cat{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.6rem;letter-spacing:.2em;color:var(--cyan);
+  margin-bottom:14px;display:flex;align-items:center;gap:8px;
+}
+.mc-cat::before{content:'';width:20px;height:1px;background:var(--cyan);}
+.mc-title{font-size:1.15rem;font-weight:700;margin-bottom:18px;letter-spacing:.05em;}
+.pill-wrap{display:flex;flex-wrap:wrap;gap:6px;}
+.pill{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.6rem;padding:4px 10px;letter-spacing:.05em;
+  border:1px solid;transition:all .2s;
+}
+.pill-c{border-color:rgba(0,245,255,.2);color:rgba(0,245,255,.7);}
+.pill-c:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(0,245,255,.06);}
+.pill-l{border-color:rgba(57,255,20,.2);color:rgba(57,255,20,.7);}
+.pill-l:hover{border-color:var(--lime);color:var(--lime);background:rgba(57,255,20,.06);}
+.pill-r{border-color:rgba(255,34,84,.2);color:rgba(255,34,84,.7);}
+.pill-r:hover{border-color:var(--red);color:var(--red);background:rgba(255,34,84,.06);}
+.pill-a{border-color:rgba(255,184,0,.2);color:rgba(255,184,0,.7);}
+.pill-a:hover{border-color:var(--amber);color:var(--amber);background:rgba(255,184,0,.06);}
+
+/* ══════════════════════ PROJECT CARDS ══════════════════════ */
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:2px;background:var(--wire);}
+.proj{background:var(--deep);padding:0;overflow:hidden;transition:background .3s;}
+.proj:hover{background:var(--panel);}
+.proj-head{
+  padding:24px 28px 20px;
+  border-bottom:1px solid var(--wire);
+  position:relative;
+}
+.proj-head::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+}
+.proj.p-live .proj-head::before{background:var(--lime);}
+.proj.p-school .proj-head::before{background:var(--cyan);}
+.proj.p-personal .proj-head::before{background:var(--red);}
+.proj-tag{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.58rem;letter-spacing:.18em;
+  margin-bottom:12px;display:flex;align-items:center;gap:8px;
+}
+.proj.p-live .proj-tag{color:var(--lime);}
+.proj.p-school .proj-tag{color:var(--cyan);}
+.proj.p-personal .proj-tag{color:var(--red);}
+.tag-dot{width:5px;height:5px;border-radius:50%;}
+.proj.p-live .tag-dot{background:var(--lime);animation:statusBlink 2s infinite;}
+.proj.p-school .tag-dot{background:var(--cyan);}
+.proj.p-personal .tag-dot{background:var(--red);}
+.proj-name{font-size:1.15rem;font-weight:700;letter-spacing:.04em;margin-bottom:4px;}
+.proj-env{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--dim);letter-spacing:.08em;}
+.proj-body{padding:20px 28px 24px;}
+.proj-desc{font-size:.9rem;color:#6a8fa8;line-height:1.7;margin-bottom:18px;}
+.chain{margin-bottom:18px;}
+.chain-label{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.18em;color:var(--dim);margin-bottom:8px;}
+.chain-steps{display:flex;flex-wrap:wrap;align-items:center;gap:4px;}
+.cs{font-family:'JetBrains Mono',monospace;font-size:.6rem;padding:3px 8px;background:rgba(0,245,255,.05);border:1px solid rgba(0,245,255,.12);color:rgba(0,245,255,.7);}
+.ca{color:var(--dim);font-size:.65rem;}
+.tools-row{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:16px;}
+.proj-lnk{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:'JetBrains Mono',monospace;font-size:.65rem;
+  letter-spacing:.08em;color:var(--cyan);text-decoration:none;
+  border-bottom:1px solid rgba(0,245,255,.25);padding-bottom:2px;
+  transition:all .2s;
+}
+.proj-lnk:hover{color:#fff;border-color:#fff;}
+
+/* ══════════════════════ CERTIF ══════════════════════ */
+.certif-row{
+  display:grid;grid-template-columns:1fr 1fr;gap:2px;
+  background:var(--wire);
+}
+.certif-box{
+  background:var(--deep);padding:36px;
+  position:relative;overflow:hidden;
+  transition:background .3s;
+}
+.certif-box:hover{background:var(--panel);}
+.certif-box::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:linear-gradient(to bottom,var(--lime),transparent);
+}
+.certif-icon{font-size:2.5rem;margin-bottom:16px;}
+.certif-name{font-size:1.15rem;font-weight:700;letter-spacing:.04em;margin-bottom:6px;}
+.certif-issuer{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.12em;color:var(--lime);margin-bottom:4px;}
+.certif-period{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--dim);}
+.certif-desc{font-size:.88rem;color:#6a8fa8;margin-top:12px;line-height:1.6;}
+
+.assoc-box{
+  background:var(--deep);padding:36px;
+  position:relative;overflow:hidden;
+  transition:background .3s;
+}
+.assoc-box:hover{background:var(--panel);}
+.assoc-box::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:linear-gradient(to bottom,var(--amber),transparent);
 }
 
-@keyframes gridMove{
-  from{transform:translateY(0);}
-  to{transform:translateY(50px);}
+/* ══════════════════════ TERMINAL ══════════════════════ */
+.term{
+  background:#010d15;border:1px solid var(--wire);
+  font-family:'JetBrains Mono',monospace;font-size:.78rem;
+  line-height:1.9;position:relative;margin-top:40px;
 }
-
-/* NAV */
-nav{
-  position:fixed;
-  top:0;left:0;right:0;
-  display:flex;
-  justify-content:space-between;
-  padding:18px 8%;
-  background:rgba(5,7,13,.75);
-  backdrop-filter:blur(12px);
-  border-bottom:1px solid rgba(255,255,255,.05);
-  z-index:1000;
+.term-bar{
+  background:var(--panel);border-bottom:1px solid var(--wire);
+  padding:10px 16px;display:flex;align-items:center;gap:8px;
 }
+.tb{width:10px;height:10px;border-radius:50%;}
+.tb1{background:#ff5f56;}.tb2{background:#ffbd2e;}.tb3{background:#27c93f;}
+.term-title{font-size:.6rem;color:var(--dim);letter-spacing:.12em;margin-left:8px;}
+.term-body{padding:20px 22px;}
+.tp{color:var(--red);}
+.tc{color:var(--cyan);}
+.to{color:#2d5a40;}
+.tok{color:var(--lime);}
+.tw{color:var(--amber);}
 
-nav a{
-  color:var(--muted);
-  margin-left:18px;
-  text-decoration:none;
-  font-size:.95rem;
+/* ══════════════════════ CONTACT ══════════════════════ */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--wire);}
+.contact-left{background:var(--deep);padding:56px;}
+.contact-right{background:var(--panel);padding:56px;display:flex;flex-direction:column;justify-content:center;gap:24px;}
+.contact-heading{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(2.5rem,4vw,4rem);
+  line-height:.95;margin-bottom:12px;
 }
-
-nav a:hover{color:var(--accent);}
-
-.logo{
-  font-family:Orbitron;
-  color:var(--accent);
-  font-weight:700;
+.contact-sub{font-size:.95rem;color:#6a8fa8;line-height:1.7;margin-bottom:32px;}
+.c-info{display:flex;flex-direction:column;gap:14px;}
+.c-line{
+  display:flex;align-items:center;gap:14px;
+  font-family:'JetBrains Mono',monospace;font-size:.72rem;
+  letter-spacing:.06em;
 }
+.c-label{color:var(--dim);width:80px;flex-shrink:0;}
+.c-val{color:var(--cyan);}
+.c-val a{color:var(--cyan);text-decoration:none;}
+.c-val a:hover{color:#fff;}
+.contact-btns{display:flex;flex-direction:column;gap:10px;}
 
-/* SECTIONS */
-section{
-  padding:120px 8%;
-  opacity:0;
-  transform:translateY(20px);
-  transition:1s ease;
-}
-
-section.show{
-  opacity:1;
-  transform:translateY(0);
-}
-
-h1{
-  font-size:4.5rem;
-  font-family:Orbitron;
-}
-
-h1 span{
-  color:var(--accent);
-  text-shadow:0 0 25px var(--accent);
-}
-
-h2{
-  font-size:2.2rem;
-  margin-bottom:20px;
-}
-
-h3{
-  margin-bottom:10px;
-}
-
-p{
-  color:#cbd5e1;
-  line-height:1.9;
-}
-
-/* BADGE */
-.badge{
-  display:inline-block;
-  margin-top:15px;
-  padding:10px 14px;
-  border-radius:10px;
-  background:rgba(0,217,255,.08);
-  border:1px solid rgba(0,217,255,.25);
-  color:var(--accent);
-  font-weight:600;
-}
-
-/* GRID */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-  gap:22px;
-}
-
-/* CARD */
-.card{
-  background:var(--card);
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:14px;
-  padding:22px;
-  transition:.3s;
-}
-
-.card:hover{
-  transform:translateY(-6px);
-  border-color:var(--accent);
-  box-shadow:0 0 30px rgba(0,217,255,.12);
-}
-
-.tag{
-  display:inline-block;
-  padding:6px 10px;
-  margin:4px 4px 0 0;
-  border-radius:20px;
-  font-size:.75rem;
-  background:rgba(0,217,255,.08);
-  border:1px solid rgba(0,217,255,.2);
-  color:var(--accent);
-}
-
-/* TERMINAL */
-.terminal{
-  margin-top:25px;
-  padding:18px;
-  border-radius:12px;
-  background:#0b1220;
-  border:1px solid rgba(0,217,255,.25);
-  font-family:monospace;
-}
-
-/* CONTACT */
-.contact-box{
-  background:linear-gradient(145deg,#0f1724,#0b1220);
-  border:1px solid rgba(0,217,255,.2);
-  padding:25px;
-  border-radius:15px;
-}
-
-/* FOOTER */
+/* ══════════════════════ FOOTER ══════════════════════ */
 footer{
-  text-align:center;
-  padding:30px;
-  color:var(--muted);
-  border-top:1px solid rgba(255,255,255,.05);
+  text-align:center;padding:28px 5vw;
+  font-family:'JetBrains Mono',monospace;font-size:.6rem;
+  color:var(--dim);letter-spacing:.12em;
+  border-top:1px solid var(--wire);
+  position:relative;z-index:2;
+}
+
+/* ══════════════════════ ANIMATIONS ══════════════════════ */
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.in{opacity:1;transform:translateY(0);}
+
+/* ══════════════════════ RESPONSIVE ══════════════════════ */
+@media(max-width:900px){
+  #hero{grid-template-columns:1fr;}
+  .hero-right{display:none;}
+  .nav-links{display:none;}
+  .certif-row,.contact-grid{grid-template-columns:1fr;}
+  .two-tl{grid-template-columns:1fr;}
 }
 </style>
 </head>
-
 <body>
 
-<!-- NAV -->
+<canvas id="matrix-canvas"></canvas>
+<div id="cur"></div>
+<div id="cur2"></div>
+
+<!-- ═══════════════ NAV ═══════════════ -->
 <nav>
-  <div class="logo">DJE.YOBOUE</div>
-  <div>
-    <a href="#about">À propos</a>
-    <a href="#skills">Compétences</a>
-    <a href="#experience">Expériences</a>
-    <a href="#certifications">Certifications</a>
-    <a href="#formation">Formation</a>
-    <a href="#contact">Contact</a>
-  </div>
+  <div class="nav-id"><span>ID://</span>YDJ_SEC_OPS</div>
+  <ul class="nav-links">
+    <li><a href="#about">Profil</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projets</a></li>
+    <li><a href="#certif">Certif</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-status"><div class="status-pulse"></div>OPEN TO ALTERNANCE</div>
 </nav>
 
-<!-- HERO -->
-<section class="show">
+<!-- ═══════════════ HERO ═══════════════ -->
+<section id="hero" class="show">
+  <div class="hero-left">
+    <div class="hero-eyebrow">MASTÈRE EXPERT IT — ÉCOLE IRIS PARIS 2025–2026</div>
 
-<h1>DJE <span>YOBOUE</span></h1>
+    <div class="hero-name">
+      <div class="line1">YOBOUE</div>
+      <div class="line2">DJE</div>
+    </div>
 
-<h2>Cybersécurité • Réseaux • Systèmes • Infrastructure IT</h2>
+    <p class="hero-title">Cybersécurité &nbsp;·&nbsp; Réseaux &nbsp;·&nbsp; Systèmes &nbsp;·&nbsp; Infrastructure</p>
 
-<div class="badge">
-🎓 Alternance : 3 semaines entreprise / 1 semaine école
-</div>
+    <p class="hero-bio">
+      Étudiant en Mastère Expert IT avec <strong>2 ans de projets techniques intensifs</strong> —
+      SIEM ELK Stack, pentest Active Directory, administration Windows Server, analyse réseau.
+      Je construis des labs pour comprendre les attaques et bâtir les défenses.
+    </p>
 
-<p>
-Étudiant en informatique spécialisé en cybersécurité, systèmes et réseaux.
-Je développe mes compétences sur des environnements professionnels simulés afin de reproduire des infrastructures réelles d’entreprise.
-</p>
+    <div class="hero-stats">
+      <div class="hstat">
+        <div class="hstat-n">2+</div>
+        <div class="hstat-l">ANS PROJETS</div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-n">4</div>
+        <div class="hstat-l">PROJETS MAJEURS</div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-n">FCF</div>
+        <div class="hstat-l">CERTIFIÉ FORTINET</div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-n">B2</div>
+        <div class="hstat-l">ANGLAIS</div>
+      </div>
+    </div>
 
-<div class="terminal">
-root@system:~$ identity → Étudiant IT cybersécurité<br>
-root@system:~$ focus → SOC | Réseaux | Systèmes<br>
-root@system:~$ status → Recherche alternance active (Île-de-France)
-</div>
+    <div class="hero-cta">
+      <a class="cta cta-primary" href="#projects">Voir mes projets</a>
+      <a class="cta cta-ghost" href="https://github.com/djeyoboue44-glitch" target="_blank">↗ GitHub</a>
+      <a class="cta cta-ghost" href="https://linkedin.com/in/yoboue-dje" target="_blank">↗ LinkedIn</a>
+      <a class="cta cta-ghost2" href="mailto:djeyoboue44@gmail.com">✉ Contact</a>
+    </div>
+  </div>
 
+  <!-- RADAR -->
+  <div class="hero-right">
+    <div class="radar-wrap">
+      <svg class="radar-svg" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="radarGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#00f5ff" stop-opacity=".15"/>
+            <stop offset="100%" stop-color="#00f5ff" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="sweepGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#00f5ff" stop-opacity="0"/>
+            <stop offset="100%" stop-color="#00f5ff" stop-opacity=".6"/>
+          </linearGradient>
+        </defs>
+        <!-- Outer rings -->
+        <circle cx="200" cy="200" r="180" fill="none" stroke="rgba(0,245,255,.08)" stroke-width="1"/>
+        <circle cx="200" cy="200" r="135" fill="none" stroke="rgba(0,245,255,.1)" stroke-width="1"/>
+        <circle cx="200" cy="200" r="90" fill="none" stroke="rgba(0,245,255,.12)" stroke-width="1"/>
+        <circle cx="200" cy="200" r="45" fill="none" stroke="rgba(0,245,255,.15)" stroke-width="1"/>
+        <!-- Cross hairs -->
+        <line x1="20" y1="200" x2="380" y2="200" stroke="rgba(0,245,255,.06)" stroke-width="1"/>
+        <line x1="200" y1="20" x2="200" y2="380" stroke="rgba(0,245,255,.06)" stroke-width="1"/>
+        <line x1="73" y1="73" x2="327" y2="327" stroke="rgba(0,245,255,.04)" stroke-width="1"/>
+        <line x1="327" y1="73" x2="73" y2="327" stroke="rgba(0,245,255,.04)" stroke-width="1"/>
+        <!-- Center glow -->
+        <circle cx="200" cy="200" r="180" fill="url(#radarGlow)"/>
+        <!-- Sweep -->
+        <g id="radar-sweep" style="transform-origin:200px 200px;animation:radarSweep 4s linear infinite;">
+          <path d="M200,200 L380,200 A180,180 0 0,0 200,20 Z" fill="url(#sweepGrad)" opacity=".4"/>
+        </g>
+        <!-- Center dot -->
+        <circle cx="200" cy="200" r="4" fill="#00f5ff" opacity=".8"/>
+        <circle cx="200" cy="200" r="8" fill="none" stroke="#00f5ff" stroke-width="1" opacity=".4"/>
+        <!-- Blips -->
+        <circle id="b1" cx="280" cy="140" r="3" fill="#39ff14" opacity=".9"><animate attributeName="opacity" values="0;1;0" dur="2.5s" begin="0.3s" repeatCount="indefinite"/></circle>
+        <circle id="b2" cx="155" cy="260" r="3" fill="#39ff14" opacity=".9"><animate attributeName="opacity" values="0;1;0" dur="3s" begin="1s" repeatCount="indefinite"/></circle>
+        <circle id="b3" cx="310" cy="240" r="2" fill="#ff2254" opacity=".9"><animate attributeName="opacity" values="0;1;0" dur="2s" begin="0.7s" repeatCount="indefinite"/></circle>
+        <circle id="b4" cx="120" cy="170" r="2.5" fill="#39ff14" opacity=".9"><animate attributeName="opacity" values="0;1;0" dur="3.5s" begin="1.5s" repeatCount="indefinite"/></circle>
+        <!-- Labels -->
+        <text x="285" y="132" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(57,255,20,.6)" letter-spacing="1">ELK SIEM</text>
+        <text x="115" y="256" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(57,255,20,.6)" letter-spacing="1">AD LAB</text>
+        <text x="315" y="236" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(255,34,84,.6)" letter-spacing="1">THREAT</text>
+        <text x="80" y="164" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(57,255,20,.6)" letter-spacing="1">NETWORK</text>
+        <!-- Ring labels -->
+        <text x="202" y="158" font-family="JetBrains Mono,monospace" font-size="6" fill="rgba(0,245,255,.3)" letter-spacing="1">R&amp;D</text>
+        <text x="202" y="113" font-family="JetBrains Mono,monospace" font-size="6" fill="rgba(0,245,255,.25)" letter-spacing="1">PENTEST</text>
+        <text x="202" y="68" font-family="JetBrains Mono,monospace" font-size="6" fill="rgba(0,245,255,.2)" letter-spacing="1">INFRA</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <div class="scroll-bar"></div>
+    SCROLL
+  </div>
 </section>
 
-<!-- ABOUT -->
+<style>
+@keyframes radarSweep{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+</style>
+
+<!-- ═══════════════ ABOUT ═══════════════ -->
+<div class="sec-divider"></div>
+
 <section id="about">
+  <div class="sec-header reveal">
+    <div class="sec-num">01 / PROFIL</div>
+    <h2 class="sec-title">PARCOURS <em>ACADÉMIQUE</em></h2>
+    <div class="sec-rule"></div>
+  </div>
 
-<h2>À propos de moi</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px" class="two-tl">
+    <div class="timeline">
+      <div class="tl-item reveal">
+        <div class="tl-meta">2025 — 2026 · EN COURS</div>
+        <div class="tl-title">Mastère Expert IT</div>
+        <div class="tl-org">ÉCOLE IRIS · PARIS</div>
+        <ul class="tl-pts">
+          <li>Cybersécurité offensive et défensive</li>
+          <li>Administration réseaux et systèmes</li>
+          <li>Haute disponibilité et pilotage de projet</li>
+          <li>Audit de sécurité</li>
+        </ul>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-meta">2022 — 2025</div>
+        <div class="tl-title">Bachelor Réseaux & Sécurité</div>
+        <div class="tl-org">HEC ABIDJAN · CÔTE D'IVOIRE</div>
+        <ul class="tl-pts">
+          <li>Normes de sécurité et cryptographie</li>
+          <li>Administration réseaux et systèmes</li>
+          <li>Génie logiciel</li>
+        </ul>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div class="tl-item reveal" style="padding-left:0">
+        <div class="tl-meta">SEP 2023 — JUN 2024</div>
+        <div class="tl-title">Employé Polyvalent</div>
+        <div class="tl-org">KFC · ABIDJAN, CÔTE D'IVOIRE</div>
+        <ul class="tl-pts">
+          <li>Rigueur opérationnelle sous pression</li>
+          <li>Travail en équipe dans un environnement exigeant</li>
+        </ul>
+      </div>
+      <div class="tl-item reveal" style="padding-left:0">
+        <div class="tl-meta">2024 — AUJOURD'HUI</div>
+        <div class="tl-title">Membre Actif</div>
+        <div class="tl-org">JCI — JEUNE CHAMBRE INTERNATIONALE · CÔTE D'IVOIRE</div>
+        <ul class="tl-pts">
+          <li>Actions de sensibilisation communautaire</li>
+          <li>Leadership et collaboration en équipe</li>
+        </ul>
+      </div>
+    </div>
+  </div>
 
-<p>
-Je suis passionné par les systèmes informatiques, les réseaux et la cybersécurité.
-Mon objectif est de comprendre le fonctionnement global des infrastructures IT et leur sécurisation.
-<br><br>
-
-J’ai développé des compétences pratiques sur des environnements virtualisés :
-Active Directory, Linux, Windows Server, outils de monitoring et analyse réseau.
-<br><br>
-
-Je m’intéresse particulièrement à la détection d’incidents, à l’analyse des logs et à la sécurisation des infrastructures d’entreprise.
-<br><br>
-
-📍 Basé en Île-de-France<br>
-🚗 Permis B<br>
-🏛️ Membre JCI (Jeune Chambre Internationale)
-</p>
-
+  <div class="term reveal">
+    <div class="term-bar">
+      <div class="tb tb1"></div><div class="tb tb2"></div><div class="tb tb3"></div>
+      <span class="term-title">PROFILE_SCAN.sh — TERMINAL</span>
+    </div>
+    <div class="term-body">
+      <div><span class="tp">root@ops</span>:<span class="tc">~$</span> ./profile_scan --target dje_yoboue</div>
+      <div class="tok">▸ Identity confirmed : YOBOUE DJE</div>
+      <div class="tok">▸ Status           : Mastère Expert IT — École IRIS Paris</div>
+      <div class="to">▸ Email            : djeyoboue44@gmail.com</div>
+      <div class="to">▸ Phone            : +33 6 14 33 03 23</div>
+      <div class="to">▸ Location         : 49 av. Gabriel Péri, 91420 Morangis · Permis B</div>
+      <div class="to">▸ GitHub           : github.com/djeyoboue44-glitch</div>
+      <div class="to">▸ LinkedIn         : linkedin.com/in/yoboue-dje</div>
+      <div class="to">▸ Portfolio        : djeyoboue44-glitch.github.io</div>
+      <div class="tw">▸ Alternance       : 3 semaines entreprise / 1 semaine école</div>
+      <div><span class="tp">root@ops</span>:<span class="tc">~$</span> <span style="border-right:2px solid #00f5ff;animation:fadeIn .8s step-end infinite">&nbsp;</span></div>
+    </div>
+  </div>
 </section>
 
-<section id="formation">
+<div class="sec-divider"></div>
 
-<h2>Formation</h2>
-
-<div class="grid">
-
-<div class="card">
-<h3>Mastère Expert IT (IRIS Paris)</h3>
-<p>
-Formation en cours spécialisée en systèmes, réseaux et cybersécurité.
-<br><br>
-Objectifs de la formation :
-- Administration des infrastructures IT
-- Sécurisation des systèmes et réseaux
-- Virtualisation et cloud
-- Analyse des incidents et supervision
-- Mise en place d’environnements d’entreprise
-</p>
-<span class="tag">Bac +4/+5</span>
-<span class="tag">IRIS Paris</span>
-</div>
-
-<div class="card">
-<h3>Compétences en formation</h3>
-<p>
-Durant mon cursus, je développe des compétences pratiques sur :
-<br><br>
-Windows Server, Linux, Active Directory, réseaux informatiques, sécurité des systèmes, analyse de logs et virtualisation.
-</p>
-<span class="tag">Pratique</span>
-<span class="tag">Infrastructure IT</span>
-</div>
-
-<div class="card">
-<h3>Objectif professionnel</h3>
-<p>
-Devenir ingénieur cybersécurité ou SOC Analyst en développant une expertise en défense des systèmes et infrastructures IT.
-<br><br>
-Je recherche une alternance pour appliquer mes compétences en entreprise.
-</p>
-<span class="tag">SOC</span>
-<span class="tag">Cybersécurité</span>
-</div>
-
-</div>
-
-</section>
-
-<!-- SKILLS -->
+<!-- ═══════════════ SKILLS ═══════════════ -->
 <section id="skills">
+  <div class="sec-header reveal">
+    <div class="sec-num">02 / COMPÉTENCES</div>
+    <h2 class="sec-title">STACK & <em>OUTILS</em></h2>
+    <div class="sec-rule"></div>
+  </div>
 
-<h2>Compétences techniques</h2>
-
-<div class="grid">
-
-<div class="card">
-<h3>Cybersécurité</h3>
-<p>
-Analyse des menaces, détection d’incidents et compréhension des attaques informatiques.
-</p>
-<span class="tag">SOC</span>
-<span class="tag">Blue Team</span>
-<span class="tag">MITRE ATT&CK</span>
-<span class="tag">Analyse logs</span>
-</div>
-
-<div class="card">
-<h3>Systèmes & Réseaux</h3>
-<p>
-Administration Windows/Linux, architecture réseau et services d’infrastructure.
-</p>
-<span class="tag">Windows Server</span>
-<span class="tag">Linux</span>
-<span class="tag">TCP/IP</span>
-<span class="tag">DNS</span>
-<span class="tag">DHCP</span>
-<span class="tag">Active Directory</span>
-</div>
-
-<div class="card">
-<h3>Supervision / SIEM</h3>
-<p>
-Analyse et centralisation des logs pour détecter anomalies et comportements suspects.
-</p>
-<span class="tag">ELK Stack</span>
-<span class="tag">Kibana</span>
-<span class="tag">Wireshark</span>
-<span class="tag">Monitoring</span>
-</div>
-
-<div class="card">
-<h3>Virtualisation</h3>
-<p>
-Création de laboratoires techniques pour simuler des environnements professionnels.
-</p>
-<span class="tag">VMware</span>
-<span class="tag">VirtualBox</span>
-<span class="tag">Kali Linux</span>
-</div>
-
-</div>
-
+  <div class="matrix-grid">
+    <div class="matrix-cell reveal">
+      <div class="mc-cat">RED TEAM</div>
+      <div class="mc-title">Pentest & Sécurité Offensive</div>
+      <div class="pill-wrap">
+        <span class="pill pill-r">Responder</span>
+        <span class="pill pill-r">Hashcat</span>
+        <span class="pill pill-r">John the Ripper</span>
+        <span class="pill pill-r">Mimikatz</span>
+        <span class="pill pill-r">BloodHound</span>
+        <span class="pill pill-r">CrackMapExec</span>
+        <span class="pill pill-r">Metasploit</span>
+        <span class="pill pill-r">Nmap</span>
+        <span class="pill pill-r">NTLM / Kerberos</span>
+        <span class="pill pill-r">LLMNR / NBT-NS</span>
+      </div>
+    </div>
+    <div class="matrix-cell reveal">
+      <div class="mc-cat">BLUE TEAM</div>
+      <div class="mc-title">Monitoring & Détection</div>
+      <div class="pill-wrap">
+        <span class="pill pill-c">ELK Stack</span>
+        <span class="pill pill-c">Elasticsearch</span>
+        <span class="pill pill-c">Logstash</span>
+        <span class="pill pill-c">Kibana</span>
+        <span class="pill pill-c">Filebeat</span>
+        <span class="pill pill-c">Winlogbeat</span>
+        <span class="pill pill-c">Wireshark</span>
+        <span class="pill pill-c">Snort</span>
+        <span class="pill pill-c">Keycloak IAM</span>
+        <span class="pill pill-c">MITRE ATT&amp;CK</span>
+      </div>
+    </div>
+    <div class="matrix-cell reveal">
+      <div class="mc-cat">INFRASTRUCTURE</div>
+      <div class="mc-title">Réseaux & Systèmes</div>
+      <div class="pill-wrap">
+        <span class="pill pill-l">TCP/IP</span>
+        <span class="pill pill-l">VLAN</span>
+        <span class="pill pill-l">DNS</span>
+        <span class="pill pill-l">DHCP</span>
+        <span class="pill pill-l">HTTP/HTTPS</span>
+        <span class="pill pill-l">Windows Server 2022</span>
+        <span class="pill pill-l">Active Directory</span>
+        <span class="pill pill-l">PowerShell</span>
+        <span class="pill pill-l">Haute disponibilité</span>
+        <span class="pill pill-l">Cisco Packet Tracer</span>
+        <span class="pill pill-l">Firewall</span>
+      </div>
+    </div>
+    <div class="matrix-cell reveal">
+      <div class="mc-cat">TOOLS & DEV</div>
+      <div class="mc-title">Virtualisation & Dev</div>
+      <div class="pill-wrap">
+        <span class="pill pill-a">VMware Workstation</span>
+        <span class="pill pill-a">VirtualBox</span>
+        <span class="pill pill-a">Kali Linux</span>
+        <span class="pill pill-a">Ubuntu</span>
+        <span class="pill pill-a">AWS (notions)</span>
+        <span class="pill pill-a">Python</span>
+        <span class="pill pill-a">SQL / SSMS</span>
+        <span class="pill pill-a">HTML / CSS</span>
+        <span class="pill pill-a">WordPress</span>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- EXPERIENCE -->
-<section id="experience">
+<div class="sec-divider"></div>
 
-<h2>Expériences & Projets</h2>
+<!-- ═══════════════ PROJECTS ═══════════════ -->
+<section id="projects">
+  <div class="sec-header reveal">
+    <div class="sec-num">03 / PROJETS</div>
+    <h2 class="sec-title">RÉALISATIONS <em>TECHNIQUES</em></h2>
+    <div class="sec-rule"></div>
+  </div>
 
-<div class="grid">
+  <div class="proj-grid">
 
-<div class="card">
-<h3>Active Directory – Infrastructure entreprise</h3>
-<p>
-Mise en place complète d’un domaine Windows Server :
-gestion utilisateurs, groupes, GPO, permissions et sécurisation des accès.
-</p>
-</div>
+    <div class="proj p-live reveal">
+      <div class="proj-head">
+        <div class="proj-tag"><div class="tag-dot"></div>PROJET MASTÈRE — EN COURS</div>
+        <div class="proj-name">Ingénieur Cybersécurité & Infrastructure</div>
+        <div class="proj-env">ÉCOLE IRIS · PARIS · SEP 2025 – AUJOURD'HUI</div>
+      </div>
+      <div class="proj-body">
+        <p class="proj-desc">Supervision sécurité d'une infrastructure réseau complète. Analyse de trafic, détection d'intrusions et déploiement SIEM.</p>
+        <div class="tools-row">
+          <span class="pill pill-c">Wireshark</span>
+          <span class="pill pill-c">ELK Stack</span>
+          <span class="pill pill-c">ARP Analysis</span>
+          <span class="pill pill-c">TCP Integrity</span>
+        </div>
+        <ul class="tl-pts">
+          <li>Supervision Wireshark : scans réseau, ARP Spoofing, flux suspects</li>
+          <li>Filtres HTTP/ARP et analyse des conversations & endpoints</li>
+          <li>Déploiement ELK Stack pour centralisation des logs</li>
+          <li>Vérification de l'intégrité des flux TCP</li>
+        </ul>
+      </div>
+    </div>
 
-<div class="card">
-<h3>SIEM ELK Stack</h3>
-<p>
-Installation et configuration d’un système de supervision des logs avec dashboards Kibana.
-Analyse des événements en temps réel.
-</p>
-</div>
+    <div class="proj p-school reveal">
+      <div class="proj-head">
+        <div class="proj-tag"><div class="tag-dot"></div>PROJET MASTÈRE</div>
+        <div class="proj-name">Déploiement SIEM ELK Stack</div>
+        <div class="proj-env">VMWARE · KALI LINUX / UBUNTU · JANVIER 2026</div>
+      </div>
+      <div class="proj-body">
+        <p class="proj-desc">Solution SIEM complète pour centralisation, analyse des logs et détection d'incidents en temps réel.</p>
+        <div class="tools-row">
+          <span class="pill pill-c">Elasticsearch</span>
+          <span class="pill pill-c">Logstash</span>
+          <span class="pill pill-c">Kibana</span>
+          <span class="pill pill-c">Filebeat</span>
+          <span class="pill pill-c">Winlogbeat</span>
+        </div>
+        <ul class="tl-pts">
+          <li>Filebeat (Linux) + Winlogbeat (Windows) pour collecte des logs</li>
+          <li>Règles de détection : brute force SSH, connexions suspectes</li>
+          <li>Tests de validation par génération d'événements réels</li>
+          <li>Dashboard Kibana pour alertes en temps réel</li>
+        </ul>
+      </div>
+    </div>
 
-<div class="card">
-<h3>Analyse réseau</h3>
-<p>
-Étude du trafic réseau avec Wireshark et identification de comportements suspects.
-Compréhension des attaques réseau basiques.
-</p>
-</div>
+    <div class="proj p-personal reveal">
+      <div class="proj-head">
+        <div class="proj-tag"><div class="tag-dot"></div>PROJET PERSONNEL — HOME LAB</div>
+        <div class="proj-name">Lab Pentest Active Directory</div>
+        <div class="proj-env">VMWARE · WINDOWS SERVER 2022 / KALI LINUX · MAI 2026</div>
+      </div>
+      <div class="proj-body">
+        <p class="proj-desc">Simulation d'attaque complète sur un AD vulnérable — de la reconnaissance jusqu'à la post-exploitation.</p>
+        <div class="chain">
+          <div class="chain-label">KILL CHAIN</div>
+          <div class="chain-steps">
+            <span class="cs">Recon</span><span class="ca">›</span>
+            <span class="cs">Enum LDAP</span><span class="ca">›</span>
+            <span class="cs">LLMNR Poison</span><span class="ca">›</span>
+            <span class="cs">NTLMv2</span><span class="ca">›</span>
+            <span class="cs">Hashcat</span><span class="ca">›</span>
+            <span class="cs">Mimikatz</span><span class="ca">›</span>
+            <span class="cs">Domain Admin</span>
+          </div>
+        </div>
+        <div class="tools-row">
+          <span class="pill pill-r">BloodHound</span>
+          <span class="pill pill-r">CrackMapExec</span>
+          <span class="pill pill-r">Responder</span>
+          <span class="pill pill-r">Mimikatz</span>
+          <span class="pill pill-r">Hashcat</span>
+          <span class="pill pill-r">John</span>
+          <span class="pill pill-r">Nmap</span>
+        </div>
+        <a class="proj-lnk" href="https://github.com/djeyoboue44-glitch/lab-pentest-active-director" target="_blank">→ Voir sur GitHub</a>
+      </div>
+    </div>
 
-<div class="card">
-<h3>Infrastructure réseau</h3>
-<p>
-Configuration de VLAN, DHCP, DNS et firewall dans un environnement simulé entreprise.
-</p>
-</div>
+    <div class="proj p-school reveal">
+      <div class="proj-head">
+        <div class="proj-tag"><div class="tag-dot"></div>PROJET BACHELOR</div>
+        <div class="proj-name">Technicien Réseaux & Systèmes</div>
+        <div class="proj-env">HEC ABIDJAN · SEP 2024 – JUN 2025</div>
+      </div>
+      <div class="proj-body">
+        <p class="proj-desc">Architecture et déploiement d'un réseau local sécurisé pour un laboratoire de 25 postes.</p>
+        <div class="tools-row">
+          <span class="pill pill-l">Windows Server</span>
+          <span class="pill pill-l">VLAN</span>
+          <span class="pill pill-l">DHCP</span>
+          <span class="pill pill-l">DNS</span>
+          <span class="pill pill-l">Firewall</span>
+        </div>
+        <ul class="tl-pts">
+          <li>Architecture et déploiement réseau local 25 postes</li>
+          <li>Configuration VLAN, DHCP, DNS et gestion des accès AD</li>
+          <li>Déploiement pare-feu avec règles de filtrage métier</li>
+          <li>Maintenance préventive et support technique niveau 2</li>
+        </ul>
+      </div>
+    </div>
 
-</div>
-
+  </div>
 </section>
 
-<!-- CERTIFICATIONS -->
-<section id="certifications">
+<div class="sec-divider"></div>
 
-<h2>Certifications</h2>
+<!-- ═══════════════ CERTIF ═══════════════ -->
+<section id="certif">
+  <div class="sec-header reveal">
+    <div class="sec-num">04 / CERTIFICATIONS & ASSOCIATIONS</div>
+    <h2 class="sec-title">RECONNAISSANCES <em>OFFICIELLES</em></h2>
+    <div class="sec-rule"></div>
+  </div>
 
-<div class="grid">
-
-<div class="card">
-<h3>Cybersécurité</h3>
-<p>
-Formation en cours / en préparation sur la sécurité informatique et les systèmes de défense.
-</p>
-<span class="tag">Security+</span>
-</div>
-
-<div class="card">
-<h3>Réseaux</h3>
-<p>
-Compétences acquises en réseaux informatiques et protocoles de communication.
-</p>
-<span class="tag">Cisco</span>
-<span class="tag">TCP/IP</span>
-</div>
-
-<div class="card">
-<h3>Systèmes</h3>
-<p>
-Administration Windows et Linux avec pratique en virtualisation.
-</p>
-<span class="tag">Linux</span>
-<span class="tag">Windows Server</span>
-</div>
-
-</div>
-
+  <div class="certif-row">
+    <div class="certif-box reveal">
+      <div class="certif-icon">🏅</div>
+      <div class="certif-name">Fortinet Certified Fundamentals in Cybersecurity</div>
+      <div class="certif-issuer">FORTINET · FCF · CERTIFICATION OFFICIELLE</div>
+      <div class="certif-period">Avr. 2026 — Avr. 2028</div>
+      <p class="certif-desc">Bases en sécurité réseau, menaces, firewall et concepts fondamentaux de cybersécurité.</p>
+    </div>
+    <div class="assoc-box reveal">
+      <div class="certif-icon">🌍</div>
+      <div class="certif-name">Membre Actif</div>
+      <div class="certif-issuer" style="color:var(--amber)">JCI — JEUNE CHAMBRE INTERNATIONALE · CÔTE D'IVOIRE</div>
+      <div class="certif-period">2024 — Aujourd'hui</div>
+      <p class="certif-desc">Actions de sensibilisation, collaboration en équipe sur des initiatives communautaires. Leadership et engagement civique.</p>
+    </div>
+  </div>
 </section>
 
-<!-- CONTACT -->
-<section id="contact">
+<div class="sec-divider"></div>
 
-<h2>Contact</h2>
+<!-- ═══════════════ CONTACT ═══════════════ -->
+<section id="contact" style="padding-top:100px;padding-bottom:100px;">
+  <div class="sec-header reveal">
+    <div class="sec-num">05 / CONTACT</div>
+    <h2 class="sec-title">RECRUTONS <em>ENSEMBLE</em></h2>
+    <div class="sec-rule"></div>
+  </div>
 
-<div class="contact-box">
-
-<p><strong>Email :</strong> djeyoboue44@gmail.com</p>
-<p><strong>Téléphone :</strong> 06 14 33 03 23</p>
-<p><strong>Localisation :</strong> Île-de-France</p>
-<p><strong>Alternance :</strong> 3 semaines entreprise / 1 semaine école</p>
-
-</div>
-
+  <div class="contact-grid reveal">
+    <div class="contact-left">
+      <div class="contact-heading">OPEN<br/>TO WORK</div>
+      <p class="contact-sub">En recherche active d'alternance en cybersécurité, réseaux ou systèmes.<br/>Rythme : <strong style="color:var(--cyan)">3 semaines entreprise / 1 semaine école</strong>.<br/>Disponible en Île-de-France et région parisienne.</p>
+      <div class="c-info">
+        <div class="c-line"><span class="c-label">EMAIL</span><span class="c-val"><a href="mailto:djeyoboue44@gmail.com">djeyoboue44@gmail.com</a></span></div>
+        <div class="c-line"><span class="c-label">PHONE</span><span class="c-val">+33 6 14 33 03 23</span></div>
+        <div class="c-line"><span class="c-label">LIEU</span><span class="c-val">91420 Morangis · Permis B</span></div>
+        <div class="c-line"><span class="c-label">GITHUB</span><span class="c-val"><a href="https://github.com/djeyoboue44-glitch" target="_blank">djeyoboue44-glitch</a></span></div>
+        <div class="c-line"><span class="c-label">LINKEDIN</span><span class="c-val"><a href="https://linkedin.com/in/yoboue-dje" target="_blank">yoboue-dje</a></span></div>
+        <div class="c-line"><span class="c-label">PORTFOLIO</span><span class="c-val"><a href="https://djeyoboue44-glitch.github.io/" target="_blank">djeyoboue44-glitch.github.io</a></span></div>
+      </div>
+    </div>
+    <div class="contact-right">
+      <p style="font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:.15em;color:var(--dim);margin-bottom:8px;">ACCÈS RAPIDE</p>
+      <div class="contact-btns">
+        <a class="cta cta-primary" href="mailto:djeyoboue44@gmail.com" style="justify-content:center">✉ Envoyer un email</a>
+        <a class="cta cta-ghost" href="https://linkedin.com/in/yoboue-dje" target="_blank" style="justify-content:center">↗ Profil LinkedIn</a>
+        <a class="cta cta-ghost" href="https://github.com/djeyoboue44-glitch" target="_blank" style="justify-content:center">↗ GitHub</a>
+        <a class="cta cta-ghost" href="https://djeyoboue44-glitch.github.io/" target="_blank" style="justify-content:center">🌐 Portfolio live</a>
+      </div>
+    </div>
+  </div>
 </section>
 
 <footer>
-© 2026 YOBOUE DJE — Portfolio Cybersécurité & IT
+  <span style="color:var(--cyan)">YOBOUE DJE</span> &nbsp;·&nbsp;
+  Mastère Expert IT Cybersécurité — École IRIS Paris &nbsp;·&nbsp;
+  <a href="https://github.com/djeyoboue44-glitch" style="color:var(--dim);text-decoration:none" target="_blank">github.com/djeyoboue44-glitch</a>
+  &nbsp;·&nbsp;
+  <a href="https://djeyoboue44-glitch.github.io/" style="color:var(--dim);text-decoration:none" target="_blank">djeyoboue44-glitch.github.io</a>
 </footer>
 
 <script>
-const sections=document.querySelectorAll("section");
-
-window.addEventListener("scroll",()=>{
-  sections.forEach(sec=>{
-    if(sec.getBoundingClientRect().top < window.innerHeight-80){
-      sec.classList.add("show");
-    }
-  });
+// Custom cursor
+const cur=document.getElementById('cur'),cur2=document.getElementById('cur2');
+document.addEventListener('mousemove',e=>{
+  cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';
+  setTimeout(()=>{cur2.style.left=e.clientX+'px';cur2.style.top=e.clientY+'px';},55);
 });
-</script>
 
+// Matrix rain canvas
+const canvas=document.getElementById('matrix-canvas');
+const ctx=canvas.getContext('2d');
+canvas.width=window.innerWidth;canvas.height=window.innerHeight;
+const cols=Math.floor(canvas.width/18);
+const drops=Array(cols).fill(1);
+const chars='01アイウエオカキクケコサシスセソタチツテトナニヌネノ';
+function drawMatrix(){
+  ctx.fillStyle='rgba(2,5,8,.06)';
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle='#00f5ff';
+  ctx.font='13px JetBrains Mono,monospace';
+  drops.forEach((y,i)=>{
+    const c=chars[Math.floor(Math.random()*chars.length)];
+    ctx.fillText(c,i*18,y*18);
+    if(y*18>canvas.height&&Math.random()>.975)drops[i]=0;
+    drops[i]++;
+  });
+}
+setInterval(drawMatrix,60);
+window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;});
+
+// Scroll reveal
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');}});
+},{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
 </body>
-</html>
+</html>  
