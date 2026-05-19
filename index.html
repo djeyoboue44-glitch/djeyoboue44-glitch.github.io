@@ -631,6 +631,10 @@ footer{
     <li><a href="#contact">Contact</a></li>
   </ul>
   <div class="nav-status"><div class="status-pulse"></div>OPEN TO ALTERNANCE</div>
+  <button class="theme-toggle" onclick="toggleTheme()">
+  <span class="toggle-icon">◐</span>
+  MODE
+  </button>
 </nav>
 
 <!-- ═══════════════ HERO ═══════════════ -->
@@ -1119,6 +1123,9 @@ const obs=new IntersectionObserver(entries=>{
   entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');}});
 },{threshold:.08});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+function toggleTheme() {
+  document.documentElement.classList.toggle("light");
+}
 </script>
 </body>
 </html>  
