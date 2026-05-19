@@ -1124,7 +1124,9 @@ const obs=new IntersectionObserver(entries=>{
 },{threshold:.08});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 function toggleTheme() {
-  document.documentElement.classList.toggle("light");
+  const root = document.querySelector("html");
+  root.classList.toggle("light");
+}
 }
 </script>
 </body>
