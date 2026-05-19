@@ -449,6 +449,169 @@ footer{
   .certif-row,.contact-grid{grid-template-columns:1fr;}
   .two-tl{grid-template-columns:1fr;}
 }
+.hero-eyebrow::before{
+  content:'';
+  width:32px;
+  height:1px;
+  background:var(--cyan);
+}
+
+.hero-name{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(5rem,9vw,9rem);
+  line-height:.9;
+  letter-spacing:.02em;
+  animation:fadeUp .8s ease .1s both;
+}
+
+.hero-name .line1{
+  color:var(--text);
+}
+
+.hero-name .line2{
+  color:transparent;
+  -webkit-text-stroke:2px var(--cyan);
+  text-shadow:var(--glow-c);
+}
+
+.hero-title{
+  font-family:'Rajdhani',sans-serif;
+  font-size:clamp(1rem,1.8vw,1.4rem);
+  font-weight:300;
+  letter-spacing:.25em;
+  color:var(--dim);
+  text-transform:uppercase;
+}
+
+.proj-desc{
+  font-size:.9rem;
+  color:#6a8fa8;
+  line-height:1.7;
+  margin-bottom:18px;
+}
+
+.chain{
+  margin-bottom:18px;
+}
+
+.chain-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.58rem;
+  letter-spacing:.18em;
+  color:var(--dim);
+  margin-bottom:8px;
+}
+
+.chain-steps{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:4px;
+}
+
+.cs{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.6rem;
+  padding:3px 8px;
+  background:rgba(0,245,255,.05);
+  border:1px solid rgba(0,245,255,.12);
+  color:rgba(0,245,255,.7);
+}
+
+.ca{
+  color:var(--dim);
+  font-size:.65rem;
+}
+
+.tools-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:5px;
+  margin-bottom:16px;
+}
+
+.proj-lnk{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.65rem;
+  letter-spacing:.08em;
+  color:var(--cyan);
+  text-decoration:none;
+  border-bottom:1px solid rgba(0,245,255,.25);
+  padding-bottom:2px;
+  transition:all .2s;
+}
+
+.proj-lnk:hover{
+  color:#fff;
+  border-color:#fff;
+}
+
+/* ══════════════════════ CERTIF ══════════════════════ */
+
+.certif-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:2px;
+  background:var(--wire);
+}
+
+/* ══════════════════════ ANIMATIONS ══════════════════════ */
+
+@keyframes fadeIn{
+  from{opacity:0;}
+  to{opacity:1;}
+}
+
+@keyframes fadeUp{
+  from{
+    opacity:0;
+    transform:translateY(24px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+.reveal{
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity .7s ease,transform .7s ease;
+}
+
+.reveal.in{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* ══════════════════════ RESPONSIVE ══════════════════════ */
+
+@media(max-width:900px){
+
+  #hero{
+    grid-template-columns:1fr;
+  }
+
+  .hero-right{
+    display:none;
+  }
+
+  .nav-links{
+    display:none;
+  }
+
+  .certif-row,
+  .contact-grid{
+    grid-template-columns:1fr;
+  }
+
+  .two-tl{
+    grid-template-columns:1fr;
+  }
+}
 </style>
 </head>
 <body>
