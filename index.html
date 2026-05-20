@@ -77,6 +77,7 @@ body{
   overflow-x:hidden;
   cursor:none;
 }
+
 /* ══════════════════════ CURSOR ══════════════════════ */
 #cur{position:fixed;width:8px;height:8px;background:var(--cyan);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .05s;mix-blend-mode:screen;}
 #cur2{position:fixed;width:28px;height:28px;border:1px solid rgba(0,245,255,.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform .12s;}
@@ -131,7 +132,6 @@ nav{
 }
 .status-pulse{width:6px;height:6px;background:var(--lime);border-radius:50%;animation:statusBlink 2s ease-in-out infinite;}
 @keyframes statusBlink{0%,100%{opacity:1;box-shadow:0 0 6px var(--lime);}50%{opacity:.3;box-shadow:none;}}
-
 /* ══════════════════════ HERO ══════════════════════ */
 #hero{
   position:relative;min-height:100vh;
@@ -242,6 +242,7 @@ nav{
 }
 .radar-wrap{position:relative;width:min(420px,40vw);aspect-ratio:1;}
 .radar-svg{width:100%;height:100%;}
+
 /* ══════════════════════ SCROLL HINT ══════════════════════ */
 .scroll-hint{
   position:absolute;bottom:36px;left:50%;transform:translateX(-50%);
@@ -276,6 +277,83 @@ section{position:relative;padding:100px 5vw;z-index:2;}
 
 .sec-divider{height:1px;background:linear-gradient(to right,transparent,var(--wire),transparent);margin:0 5vw;}
 
+/* ══════════════════════ ABOUT BLOCKS ══════════════════════ */
+.about-block{margin-bottom:40px;}
+.about-block-label{
+  display:flex;align-items:center;gap:12px;
+  margin-bottom:14px;
+}
+.abl-icon{font-size:1.1rem;}
+.abl-text{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.65rem;letter-spacing:.25em;
+  color:var(--dim);font-weight:600;
+  white-space:nowrap;
+}
+.abl-line{flex:1;height:1px;background:linear-gradient(to right,var(--wire),transparent);}
+.about-cards-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;}
+.about-cards-single{display:grid;grid-template-columns:1fr;gap:2px;}
+@media(max-width:700px){.about-cards-grid{grid-template-columns:1fr;}}
+
+.about-card{
+  padding:28px;position:relative;overflow:hidden;
+  transition:background .3s;
+}
+.about-card::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+}
+/* Blue = formation */
+.ac-blue{background:var(--deep);}
+.ac-blue:hover{background:var(--panel);}
+.ac-blue::before{background:linear-gradient(to bottom,var(--cyan),transparent);}
+/* Amber = pro experience */
+.ac-amber{background:var(--deep);}
+.ac-amber:hover{background:var(--panel);}
+.ac-amber::before{background:linear-gradient(to bottom,var(--amber),transparent);}
+/* Lime = associative */
+.ac-lime{background:var(--deep);}
+.ac-lime:hover{background:var(--panel);}
+.ac-lime::before{background:linear-gradient(to bottom,var(--lime),transparent);}
+
+.ac-meta{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.58rem;letter-spacing:.15em;margin-bottom:8px;
+}
+.ac-blue .ac-meta{color:var(--cyan);opacity:.7;}
+.ac-amber .ac-meta{color:var(--amber);opacity:.8;}
+.ac-lime .ac-meta{color:var(--lime);opacity:.8;}
+
+.ac-title{font-size:1.15rem;font-weight:700;letter-spacing:.04em;margin-bottom:4px;}
+.ac-org{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.62rem;color:var(--dim);
+  letter-spacing:.08em;margin-bottom:14px;
+}
+.ac-card-top{
+  display:flex;align-items:flex-start;
+  justify-content:space-between;gap:16px;flex-wrap:wrap;
+}
+.exp-badge-wrap{display:flex;flex-wrap:wrap;gap:6px;flex-shrink:0;}
+.exp-badge{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.56rem;letter-spacing:.12em;
+  padding:3px 10px;white-space:nowrap;
+}
+.eb-amber{background:rgba(255,184,0,.08);border:1px solid rgba(255,184,0,.25);color:var(--amber);}
+.eb-lime{background:rgba(57,255,20,.06);border:1px solid rgba(57,255,20,.2);color:var(--lime);}
+.exp-skills-row{
+  display:flex;flex-wrap:wrap;gap:6px;margin-top:16px;
+  padding-top:14px;
+  border-top:1px solid var(--wire);
+}
+.exp-skill{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.58rem;letter-spacing:.06em;
+  padding:3px 10px;
+  background:rgba(255,255,255,.03);
+  border:1px solid var(--wire);
+  color:var(--dim);
+}
 /* ══════════════════════ TIMELINE ══════════════════════ */
 .timeline{position:relative;padding-left:40px;}
 .timeline::before{
@@ -349,6 +427,7 @@ section{position:relative;padding:100px 5vw;z-index:2;}
 .pill-r:hover{border-color:var(--red);color:var(--red);background:rgba(255,34,84,.06);}
 .pill-a{border-color:rgba(255,184,0,.2);color:rgba(255,184,0,.7);}
 .pill-a:hover{border-color:var(--amber);color:var(--amber);background:rgba(255,184,0,.06);}
+
 /* ══════════════════════ PROJECT CARDS ══════════════════════ */
 .proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:2px;background:var(--wire);}
 .proj{background:var(--deep);padding:0;overflow:hidden;transition:background .3s;}
@@ -408,7 +487,13 @@ section{position:relative;padding:100px 5vw;z-index:2;}
 .certif-box:hover{background:var(--panel);}
 .certif-box::before{
   content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
-  background:linear-gradient(to bottom,var(--lime),transparent);
+  background:linear-gradient(to bottom,#ee3124,transparent);
+}
+.certif-box::after{
+  content:'';position:absolute;top:0;right:0;
+  width:90px;height:90px;
+  background:radial-gradient(circle at top right,rgba(238,49,36,.07),transparent 70%);
+  pointer-events:none;
 }
 .certif-icon{font-size:2.5rem;margin-bottom:16px;}
 .certif-name{font-size:1.15rem;font-weight:700;letter-spacing:.04em;margin-bottom:6px;}
@@ -496,6 +581,7 @@ footer{
 </style>
 </head>
 <body>
+
 <canvas id="matrix-canvas"></canvas>
 <div id="cur"></div>
 <div id="cur2"></div>
@@ -618,22 +704,29 @@ footer{
 <style>
 @keyframes radarSweep{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
 </style>
+
 <!-- ═══════════════ ABOUT ═══════════════ -->
 <div class="sec-divider"></div>
 
 <section id="about">
   <div class="sec-header reveal">
     <div class="sec-num">01 / PROFIL</div>
-    <h2 class="sec-title">PARCOURS <em>ACADÉMIQUE</em></h2>
+    <h2 class="sec-title">PARCOURS <em>COMPLET</em></h2>
     <div class="sec-rule"></div>
   </div>
 
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px" class="two-tl">
-    <div class="timeline">
-      <div class="tl-item reveal">
-        <div class="tl-meta">2025 — 2026 · EN COURS</div>
-        <div class="tl-title">Mastère Expert IT</div>
-        <div class="tl-org">ÉCOLE IRIS · PARIS</div>
+  <!-- FORMATION -->
+  <div class="about-block reveal">
+    <div class="about-block-label">
+      <span class="abl-icon">🎓</span>
+      <span class="abl-text">FORMATION</span>
+      <div class="abl-line"></div>
+    </div>
+    <div class="about-cards-grid" style="background:var(--wire);">
+      <div class="about-card ac-blue">
+        <div class="ac-meta">2025 — 2026 · EN COURS</div>
+        <div class="ac-title">Mastère Expert IT</div>
+        <div class="ac-org">ÉCOLE IRIS · PARIS</div>
         <ul class="tl-pts">
           <li>Cybersécurité offensive et défensive</li>
           <li>Administration réseaux et systèmes</li>
@@ -641,10 +734,10 @@ footer{
           <li>Audit de sécurité</li>
         </ul>
       </div>
-      <div class="tl-item reveal">
-        <div class="tl-meta">2022 — 2025</div>
-        <div class="tl-title">Bachelor Réseaux & Sécurité</div>
-        <div class="tl-org">HEC ABIDJAN · CÔTE D'IVOIRE</div>
+      <div class="about-card ac-blue">
+        <div class="ac-meta">2022 — 2025</div>
+        <div class="ac-title">Bachelor Réseaux &amp; Sécurité</div>
+        <div class="ac-org">HEC ABIDJAN · CÔTE D'IVOIRE</div>
         <ul class="tl-pts">
           <li>Normes de sécurité et cryptographie</li>
           <li>Administration réseaux et systèmes</li>
@@ -652,24 +745,73 @@ footer{
         </ul>
       </div>
     </div>
-    <div style="display:flex;flex-direction:column;gap:16px;">
-      <div class="tl-item reveal" style="padding-left:0">
-        <div class="tl-meta">SEP 2023 — JUN 2024</div>
-        <div class="tl-title">Employé Polyvalent</div>
-        <div class="tl-org">KFC · ABIDJAN, CÔTE D'IVOIRE</div>
-        <ul class="tl-pts">
-          <li>Rigueur opérationnelle sous pression</li>
-          <li>Travail en équipe dans un environnement exigeant</li>
+  </div>
+
+  <!-- EXPÉRIENCE PROFESSIONNELLE -->
+  <div class="about-block reveal">
+    <div class="about-block-label">
+      <span class="abl-icon">💼</span>
+      <span class="abl-text">EXPÉRIENCE PROFESSIONNELLE</span>
+      <div class="abl-line"></div>
+    </div>
+    <div class="about-cards-single" style="background:var(--wire);">
+      <div class="about-card ac-amber">
+        <div class="ac-card-top">
+          <div>
+            <div class="ac-meta">SEP 2023 — JUN 2024</div>
+            <div class="ac-title">Employé Polyvalent</div>
+            <div class="ac-org">KFC · ABIDJAN, CÔTE D'IVOIRE</div>
+          </div>
+          <div class="exp-badge-wrap">
+            <span class="exp-badge eb-amber">RESTAURATION</span>
+            <span class="exp-badge eb-amber">TEMPS PLEIN</span>
+          </div>
+        </div>
+        <ul class="tl-pts" style="margin-top:14px;">
+          <li>Rigueur opérationnelle dans un environnement à fort rythme</li>
+          <li>Travail en équipe et gestion de situations sous pression</li>
+          <li>Sens du service client et respect des procédures qualité</li>
         </ul>
+        <div class="exp-skills-row">
+          <span class="exp-skill">Travail en équipe</span>
+          <span class="exp-skill">Gestion du stress</span>
+          <span class="exp-skill">Rigueur</span>
+          <span class="exp-skill">Organisation</span>
+        </div>
       </div>
-      <div class="tl-item reveal" style="padding-left:0">
-        <div class="tl-meta">2024 — AUJOURD'HUI</div>
-        <div class="tl-title">Membre Actif</div>
-        <div class="tl-org">JCI — JEUNE CHAMBRE INTERNATIONALE · CÔTE D'IVOIRE</div>
-        <ul class="tl-pts">
-          <li>Actions de sensibilisation communautaire</li>
-          <li>Leadership et collaboration en équipe</li>
+    </div>
+  </div>
+<!-- VIE ASSOCIATIVE -->
+  <div class="about-block reveal">
+    <div class="about-block-label">
+      <span class="abl-icon">🌍</span>
+      <span class="abl-text">VIE ASSOCIATIVE</span>
+      <div class="abl-line"></div>
+    </div>
+    <div class="about-cards-single" style="background:var(--wire);">
+      <div class="about-card ac-lime">
+        <div class="ac-card-top">
+          <div>
+            <div class="ac-meta">2024 — AUJOURD'HUI · EN COURS</div>
+            <div class="ac-title">Membre Actif</div>
+            <div class="ac-org">JCI — JEUNE CHAMBRE INTERNATIONALE · CÔTE D'IVOIRE</div>
+          </div>
+          <div class="exp-badge-wrap">
+            <span class="exp-badge eb-lime">BÉNÉVOLAT</span>
+            <span class="exp-badge eb-lime">ACTIF</span>
+          </div>
+        </div>
+        <ul class="tl-pts" style="margin-top:14px;">
+          <li>Actions de sensibilisation sur des enjeux communautaires</li>
+          <li>Leadership et coordination de projets collectifs</li>
+          <li>Développement du réseau professionnel international</li>
         </ul>
+        <div class="exp-skills-row">
+          <span class="exp-skill">Leadership</span>
+          <span class="exp-skill">Communication</span>
+          <span class="exp-skill">Engagement civique</span>
+          <span class="exp-skill">Réseau international</span>
+        </div>
       </div>
     </div>
   </div>
@@ -774,6 +916,7 @@ footer{
 </section>
 
 <div class="sec-divider"></div>
+
 <!-- ═══════════════ PROJECTS ═══════════════ -->
 <section id="projects">
   <div class="sec-header reveal">
@@ -892,6 +1035,7 @@ footer{
 </section>
 
 <div class="sec-divider"></div>
+
 <!-- ═══════════════ CERTIF ═══════════════ -->
 <section id="certif">
   <div class="sec-header reveal">
@@ -902,7 +1046,21 @@ footer{
 
   <div class="certif-row">
     <div class="certif-box reveal">
-      <div class="certif-icon">🏅</div>
+      <!-- Fortinet Logo SVG officiel -->
+      <div style="margin-bottom:20px;">
+        <svg width="160" height="44" viewBox="0 0 300 82" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+          <!-- Shield icon -->
+          <path d="M28 4 L52 4 L52 44 C52 58 40 68 28 74 C16 68 4 58 4 44 L4 4 Z" fill="#EE3124"/>
+          <path d="M14 18 L42 18 L42 26 L14 26 Z" fill="white"/>
+          <path d="M14 34 L42 34 L42 42 L14 42 Z" fill="white"/>
+          <!-- FORTINET text -->
+          <text x="64" y="54" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="38" fill="#EE3124" letter-spacing="1">FORTINET</text>
+        </svg>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+        <div style="background:rgba(238,49,36,.12);border:1px solid rgba(238,49,36,.3);padding:4px 12px;font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.15em;color:#ee3124;">FCF</div>
+        <div style="background:rgba(57,255,20,.08);border:1px solid rgba(57,255,20,.2);padding:4px 12px;font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.15em;color:var(--lime);">VALIDE 2026–2028</div>
+      </div>
       <div class="certif-name">Fortinet Certified Fundamentals in Cybersecurity</div>
       <div class="certif-issuer">FORTINET · FCF · CERTIFICATION OFFICIELLE</div>
       <div class="certif-period">Avr. 2026 — Avr. 2028</div>
