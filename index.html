@@ -6,6 +6,16 @@
 <title>YOBOUE DJE — Cybersecurity Engineer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;700&family=Bebas+Neue&display=swap" rel="stylesheet"/>
+<script>
+// Apply saved/system theme before first paint to avoid a flash of the wrong mode
+(function(){
+  try{
+    var saved=localStorage.getItem('ydj-theme');
+    var wantsLight=saved?saved==='light':window.matchMedia('(prefers-color-scheme: light)').matches;
+    if(wantsLight)document.documentElement.classList.add('light');
+  }catch(e){}
+})();
+</script>
 <style>
 :root{
   --void:#020508;
@@ -53,6 +63,34 @@ html.light #cur2{border-color:rgba(0,119,168,.4);}
 html.light .hero-name .line2{-webkit-text-stroke-color:var(--cyan);}
 html.light .sec-title em{-webkit-text-stroke-color:var(--cyan);}
 html.light body::after{background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,119,168,.005) 3px,rgba(0,119,168,.005) 4px);}
+/* Body copy was tuned for a dark background (light blue-grays) and read as washed-out
+   on the light theme — darken it here for real contrast against the white panels. */
+html.light .hero-bio,
+html.light .tl-pts li,
+html.light .proj-desc,
+html.light .certif-desc,
+html.light .contact-sub{color:#3c5570;}
+html.light .hstat-l,
+html.light .abl-text,
+html.light .ac-org,
+html.light .tl-org,
+html.light .proj-env,
+html.light .certif-period,
+html.light .exp-skill,
+html.light .c-label,
+html.light .ca{color:#4d6b85;}
+/* Skill/tool pills used low-opacity neon colors that all but disappear on white —
+   give them solid, readable variants for light mode. */
+html.light .pill-c{border-color:rgba(0,119,168,.35);color:#005f80;background:rgba(0,119,168,.05);}
+html.light .pill-c:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(0,119,168,.1);}
+html.light .pill-l{border-color:rgba(26,143,0,.35);color:#166b00;background:rgba(26,143,0,.05);}
+html.light .pill-l:hover{border-color:var(--lime);color:var(--lime);background:rgba(26,143,0,.1);}
+html.light .pill-r{border-color:rgba(192,16,64,.35);color:#9c0d33;background:rgba(192,16,64,.05);}
+html.light .pill-r:hover{border-color:var(--red);color:var(--red);background:rgba(192,16,64,.1);}
+html.light .pill-a{border-color:rgba(160,104,0,.35);color:#7d5200;background:rgba(160,104,0,.05);}
+html.light .pill-a:hover{border-color:var(--amber);color:var(--amber);background:rgba(160,104,0,.1);}
+html.light .exp-skill{background:rgba(15,30,46,.04);border-color:var(--wire);}
+html.light .cs{background:rgba(0,119,168,.06);border-color:rgba(0,119,168,.25);color:#005f80;}
 /* Toggle button */
 .theme-toggle{
   display:flex;align-items:center;gap:8px;
@@ -476,7 +514,7 @@ section{position:relative;padding:100px 5vw;z-index:2;}
 
 /* ══════════════════════ CERTIF ══════════════════════ */
 .certif-row{
-  display:grid;grid-template-columns:1fr 1fr;gap:2px;
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2px;
   background:var(--wire);
 }
 .certif-box{
@@ -500,6 +538,9 @@ section{position:relative;padding:100px 5vw;z-index:2;}
 .certif-issuer{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.12em;color:var(--lime);margin-bottom:4px;}
 .certif-period{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--dim);}
 .certif-desc{font-size:.88rem;color:#6a8fa8;margin-top:12px;line-height:1.6;}
+
+.certif-box.aws-box::before{background:linear-gradient(to bottom,#FF9900,transparent);}
+.certif-box.aws-box::after{background:radial-gradient(circle at top right,rgba(255,153,0,.07),transparent 70%);}
 
 .assoc-box{
   background:var(--deep);padding:36px;
@@ -596,7 +637,13 @@ footer{
     <li><a href="#certif">Certif</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <div class="nav-status"><div class="status-pulse"></div>OPEN TO ALTERNANCE</div>
+  <div style="display:flex;align-items:center;gap:16px;">
+    <div class="nav-status"><div class="status-pulse"></div>OPEN TO ALTERNANCE</div>
+    <button class="theme-toggle" id="themeToggle" aria-label="Changer de thème" type="button">
+      <span class="toggle-icon" id="themeIcon">🌙</span>
+      <span id="themeLabel">SOMBRE</span>
+    </button>
+  </div>
 </nav>
 
 <!-- ═══════════════ HERO ═══════════════ -->
@@ -613,7 +660,7 @@ footer{
 
     <p class="hero-bio">
       Étudiant en Mastère Expert IT avec <strong>2 ans de projets techniques intensifs</strong> —
-      SIEM ELK Stack, pentest Active Directory, administration Windows Server, analyse réseau.
+      SIEM ELK Stack, pentest Active Directory, supervision d'infrastructure Docker/Prometheus, administration Windows Server.
       Je construis des labs pour comprendre les attaques et bâtir les défenses.
     </p>
 
@@ -623,7 +670,7 @@ footer{
         <div class="hstat-l">ANS PROJETS</div>
       </div>
       <div class="hstat">
-        <div class="hstat-n">4</div>
+        <div class="hstat-n">5</div>
         <div class="hstat-l">PROJETS MAJEURS</div>
       </div>
       <div class="hstat">
@@ -827,7 +874,7 @@ footer{
       <div class="tok">▸ Status           : Mastère Expert IT — École IRIS Paris</div>
       <div class="to">▸ Email            : djeyoboue44@gmail.com</div>
       <div class="to">▸ Phone            : +33 6 14 33 03 23</div>
-      <div class="to">▸ Location         : 49 av. Gabriel Péri, 91420 Morangis · Permis B</div>
+      <div class="to">▸ Zone             : Île-de-France · Mobilité France & international · Permis B</div>
       <div class="to">▸ GitHub           : github.com/djeyoboue44-glitch</div>
       <div class="to">▸ LinkedIn         : linkedin.com/in/yoboue-dje</div>
       <div class="to">▸ Portfolio        : djeyoboue44-glitch.github.io</div>
@@ -874,6 +921,8 @@ footer{
         <span class="pill pill-c">Kibana</span>
         <span class="pill pill-c">Filebeat</span>
         <span class="pill pill-c">Winlogbeat</span>
+        <span class="pill pill-c">Prometheus</span>
+        <span class="pill pill-c">Grafana</span>
         <span class="pill pill-c">Wireshark</span>
         <span class="pill pill-c">Snort</span>
         <span class="pill pill-c">Keycloak IAM</span>
@@ -895,6 +944,7 @@ footer{
         <span class="pill pill-l">Haute disponibilité</span>
         <span class="pill pill-l">Cisco Packet Tracer</span>
         <span class="pill pill-l">Firewall</span>
+        <span class="pill pill-l">MQTT</span>
       </div>
     </div>
     <div class="matrix-cell reveal">
@@ -905,8 +955,10 @@ footer{
         <span class="pill pill-a">VirtualBox</span>
         <span class="pill pill-a">Kali Linux</span>
         <span class="pill pill-a">Ubuntu</span>
-        <span class="pill pill-a">AWS (notions)</span>
+        <span class="pill pill-a">Docker Compose</span>
+        <span class="pill pill-a">AWS</span>
         <span class="pill pill-a">Python</span>
+        <span class="pill pill-a">FastAPI</span>
         <span class="pill pill-a">SQL / SSMS</span>
         <span class="pill pill-a">HTML / CSS</span>
         <span class="pill pill-a">WordPress</span>
@@ -929,7 +981,44 @@ footer{
 
     <div class="proj p-live reveal">
       <div class="proj-head">
-        <div class="proj-tag"><div class="tag-dot"></div> PROJET  PERSONNEL </div>
+        <div class="proj-tag"><div class="tag-dot"></div> PROJET PERSONNEL — EN COURS</div>
+        <div class="proj-name">Plateforme de Supervision IoT Telemetry</div>
+        <div class="proj-env">DOCKER COMPOSE · PROMETHEUS / GRAFANA · JUIN 2026</div>
+      </div>
+      <div class="proj-body">
+        <p class="proj-desc">Plateforme d'observabilité full-stack couvrant trois domaines de supervision — infrastructure, capteurs IoT (MQTT) et application métier — avec alerting différencié par domaine.</p>
+        <div class="chain">
+          <div class="chain-label">CHAÎNE DE TÉLÉMÉTRIE</div>
+          <div class="chain-steps">
+            <span class="cs">Capteurs IoT</span><span class="ca">›</span>
+            <span class="cs">Mosquitto MQTT</span><span class="ca">›</span>
+            <span class="cs">Telegraf</span><span class="ca">›</span>
+            <span class="cs">Prometheus</span><span class="ca">›</span>
+            <span class="cs">Alertmanager</span><span class="ca">›</span>
+            <span class="cs">Grafana</span>
+          </div>
+        </div>
+        <div class="tools-row">
+          <span class="pill pill-c">Docker Compose</span>
+          <span class="pill pill-c">Prometheus</span>
+          <span class="pill pill-c">Grafana</span>
+          <span class="pill pill-c">Mosquitto</span>
+          <span class="pill pill-c">Telegraf</span>
+          <span class="pill pill-c">FastAPI</span>
+        </div>
+        <ul class="tl-pts">
+          <li>8 règles d'alerting réparties sur 3 domaines (infra / IoT / applicatif)</li>
+          <li>Microservice FastAPI instrumenté, exposé au client Prometheus</li>
+          <li>Simulateur de capteurs IoT en Python, publication via MQTT</li>
+          <li>Scénarios de panne simulés pour valider la remontée d'alertes</li>
+        </ul>
+        <a class="proj-lnk" href="https://github.com/djeyoboue44-glitch/lab-iot-telemetry-monitoring" target="_blank">→ Voir sur GitHub</a>
+      </div>
+    </div>
+
+    <div class="proj p-live reveal">
+      <div class="proj-head">
+        <div class="proj-tag"><div class="tag-dot"></div> PROJET PERSONNEL</div>
         <div class="proj-name">Ingénieur Cybersécurité & Infrastructure</div>
         <div class="proj-env">ÉCOLE IRIS · PARIS · SEP 2025 – AUJOURD'HUI</div>
       </div>
@@ -973,7 +1062,6 @@ footer{
           <li>Dashboard Kibana pour alertes en temps réel</li>
         </ul>
         <a class="proj-lnk" href="https://github.com/djeyoboue44-glitch/siem-elk-stack-deployment" target="_blank">→ Voir sur GitHub</a>
-      </div>
       </div>
     </div>
 
@@ -1068,28 +1156,30 @@ footer{
       <div class="certif-issuer">FORTINET · FCF · CERTIFICATION OFFICIELLE</div>
       <div class="certif-period">Avr. 2026 — Avr. 2028</div>
       <p class="certif-desc">Bases en sécurité réseau, menaces, firewall et concepts fondamentaux de cybersécurité.</p>
-      <div class="certif-box" style="border-left:3px solid transparent;border-image:linear-gradient(to bottom,#FF9900,transparent) 1;">
-  <div style="margin-bottom:20px;display:flex;align-items:center;gap:12px;">
-    <svg width="72" height="44" viewBox="0 0 72 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M20.3 26.8c0 .8.1 1.4.2 1.8.2.4.4.8.8 1.3.1.1.2.3.2.5 0 .2-.1.4-.4.6l-1.3.9c-.2.1-.4.2-.5.2-.2 0-.4-.1-.6-.3-.3-.3-.5-.6-.7-1-.2-.4-.4-.9-.6-1.5-1.5 1.8-3.4 2.7-5.7 2.7-1.6 0-2.9-.5-3.8-1.4-.9-.9-1.4-2.2-1.4-3.7 0-1.6.6-2.9 1.7-3.9 1.1-1 2.6-1.5 4.5-1.5.6 0 1.3.1 2 .2.7.1 1.4.3 2.2.5v-1.4c0-1.4-.3-2.4-.9-3-.6-.6-1.6-.9-3-.9-.6 0-1.3.1-2 .3-.7.2-1.3.4-2 .7-.3.1-.5.2-.6.3-.1.1-.2.1-.3.1-.3 0-.4-.2-.4-.6v-.9c0-.3 0-.5.1-.7.1-.2.3-.4.6-.5.7-.4 1.5-.7 2.4-.9.9-.2 1.9-.4 2.9-.4 2.2 0 3.8.5 4.9 1.5 1.1 1 1.6 2.5 1.6 4.6v6zm-7.9 3c.6 0 1.2-.1 1.9-.4.7-.3 1.3-.7 1.8-1.4.3-.4.5-.8.6-1.3.1-.5.2-1.1.2-1.8v-.9c-.6-.1-1.2-.3-1.9-.4-.7-.1-1.3-.1-1.9-.1-1.4 0-2.4.3-3 .8-.6.5-1 1.3-1 2.3 0 .9.2 1.6.7 2.1.5.7 1.3 1.1 2.6 1.1zm16.1 2.2c-.3 0-.5-.1-.7-.2-.2-.1-.4-.4-.5-.7l-5.6-18.5c-.1-.3-.2-.6-.2-.7 0-.3.2-.4.5-.4h2c.3 0 .6.1.7.2.2.1.3.4.4.7l4 15.8 3.7-15.8c.1-.3.2-.6.4-.7.2-.1.4-.2.8-.2h1.6c.3 0 .6.1.8.2.2.1.3.4.4.7l3.7 16 4.1-16c.1-.3.3-.6.4-.7.2-.1.4-.2.7-.2h1.9c.3 0 .5.1.5.4 0 .1 0 .2-.1.4l-.1.3-5.8 18.5c-.1.3-.3.6-.5.7-.2.1-.5.2-.7.2h-1.7c-.3 0-.6-.1-.8-.2-.2-.1-.3-.4-.4-.7l-3.7-15.4-3.7 15.4c-.1.3-.2.6-.4.7-.2.1-.5.2-.8.2h-1.7zm31.1.5c-1 0-2.1-.1-3.1-.4-1-.3-1.8-.6-2.3-.9-.3-.2-.5-.4-.6-.6-.1-.2-.1-.4-.1-.6v-1c0-.4.1-.6.4-.6.1 0 .2 0 .4.1.1.1.3.1.4.2.6.3 1.3.5 2 .7.7.2 1.4.3 2.1.3 1.1 0 2-.2 2.6-.6.6-.4.9-.9.9-1.6 0-.5-.2-.9-.5-1.2-.3-.3-1-.6-2-1l-2.8-.9c-1.4-.4-2.4-1.1-3.1-2-.7-.9-1-1.9-1-3 0-.9.2-1.7.6-2.3.4-.7.9-1.2 1.6-1.7.7-.4 1.4-.8 2.2-1 .8-.2 1.7-.3 2.6-.3.5 0 .9 0 1.4.1.5.1.9.2 1.3.3.4.1.8.2 1.1.3.4.1.6.2.8.3.3.1.5.3.6.5.1.2.2.4.2.7v.9c0 .4-.1.6-.4.6-.2 0-.4-.1-.7-.2-.9-.4-1.9-.6-3-.6-1 0-1.8.2-2.3.5-.5.3-.8.8-.8 1.5 0 .5.2.9.6 1.2.4.3 1.1.7 2.2 1l2.8.9c1.4.4 2.4 1.1 3 1.9.6.8.9 1.8.9 2.9 0 .9-.2 1.7-.6 2.4-.4.7-.9 1.3-1.6 1.8-.7.5-1.5.8-2.4 1.1-.9.3-1.9.4-2.9.4z" fill="#FF9900"/>
-      <path d="M57.5 36.3c-6.9 5.1-17 7.8-25.7 7.8-12.1 0-23.1-4.5-31.3-11.9-.6-.6-.1-1.3.7-.9 8.9 5.2 19.9 8.3 31.3 8.3 7.7 0 16.1-1.6 23.9-4.9 1.2-.5 2.1.8 1.1 1.6z" fill="#FF9900"/>
-      <path d="M60.4 33c-.9-1.1-5.8-.5-7.9-.3-.7.1-.8-.5-.2-.9 3.9-2.7 10.3-2 11 .9.7 2.9-3.9 8.5-7.6 10.8-.5.3-1.1.1-.9-.4.8-2 2.6-6.5 1.6-8.1z" fill="#FF9900"/>
-    </svg>
-    <div style="display:flex;flex-direction:column;gap:2px;">
-      <span style="font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:.18em;color:var(--dim);">AMAZON WEB SERVICES</span>
-      <span style="font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:.12em;color:var(--dim);">TRAINING & CERTIFICATION</span>
     </div>
-  </div>
-  <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap;">
-    <div style="background:rgba(255,153,0,.1);border:1px solid rgba(255,153,0,.3);padding:4px 12px;font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.15em;color:#FF9900;">AWS CLF</div>
-    <div style="background:rgba(57,255,20,.08);border:1px solid rgba(57,255,20,.2);padding:4px 12px;font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.15em;color:var(--lime);">COMPLÉTÉ JUN. 2026</div>
-  </div>
-  <div class="certif-name">AWS Cloud Practitioner Essentials</div>
-  <div class="certif-issuer" style="color:#FF9900;">AMAZON WEB SERVICES · CERTIFICATION OFFICIELLE</div>
-  <div class="certif-period">Juin 2026</div>
-  <p class="certif-desc">Fondamentaux du cloud AWS : services core, modèle de responsabilité partagée, sécurité, tarification et architecture cloud.</p>
-</div>
+
+    <div class="certif-box aws-box reveal">
+      <div style="margin-bottom:20px;display:flex;align-items:center;gap:12px;">
+        <svg width="72" height="44" viewBox="0 0 72 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20.3 26.8c0 .8.1 1.4.2 1.8.2.4.4.8.8 1.3.1.1.2.3.2.5 0 .2-.1.4-.4.6l-1.3.9c-.2.1-.4.2-.5.2-.2 0-.4-.1-.6-.3-.3-.3-.5-.6-.7-1-.2-.4-.4-.9-.6-1.5-1.5 1.8-3.4 2.7-5.7 2.7-1.6 0-2.9-.5-3.8-1.4-.9-.9-1.4-2.2-1.4-3.7 0-1.6.6-2.9 1.7-3.9 1.1-1 2.6-1.5 4.5-1.5.6 0 1.3.1 2 .2.7.1 1.4.3 2.2.5v-1.4c0-1.4-.3-2.4-.9-3-.6-.6-1.6-.9-3-.9-.6 0-1.3.1-2 .3-.7.2-1.3.4-2 .7-.3.1-.5.2-.6.3-.1.1-.2.1-.3.1-.3 0-.4-.2-.4-.6v-.9c0-.3 0-.5.1-.7.1-.2.3-.4.6-.5.7-.4 1.5-.7 2.4-.9.9-.2 1.9-.4 2.9-.4 2.2 0 3.8.5 4.9 1.5 1.1 1 1.6 2.5 1.6 4.6v6zm-7.9 3c.6 0 1.2-.1 1.9-.4.7-.3 1.3-.7 1.8-1.4.3-.4.5-.8.6-1.3.1-.5.2-1.1.2-1.8v-.9c-.6-.1-1.2-.3-1.9-.4-.7-.1-1.3-.1-1.9-.1-1.4 0-2.4.3-3 .8-.6.5-1 1.3-1 2.3 0 .9.2 1.6.7 2.1.5.7 1.3 1.1 2.6 1.1zm16.1 2.2c-.3 0-.5-.1-.7-.2-.2-.1-.4-.4-.5-.7l-5.6-18.5c-.1-.3-.2-.6-.2-.7 0-.3.2-.4.5-.4h2c.3 0 .6.1.7.2.2.1.3.4.4.7l4 15.8 3.7-15.8c.1-.3.2-.6.4-.7.2-.1.4-.2.8-.2h1.6c.3 0 .6.1.8.2.2.1.3.4.4.7l3.7 16 4.1-16c.1-.3.3-.6.4-.7.2-.1.4-.2.7-.2h1.9c.3 0 .5.1.5.4 0 .1 0 .2-.1.4l-.1.3-5.8 18.5c-.1.3-.3.6-.5.7-.2.1-.5.2-.7.2h-1.7c-.3 0-.6-.1-.8-.2-.2-.1-.3-.4-.4-.7l-3.7-15.4-3.7 15.4c-.1.3-.2.6-.4.7-.2.1-.5.2-.8.2h-1.7zm31.1.5c-1 0-2.1-.1-3.1-.4-1-.3-1.8-.6-2.3-.9-.3-.2-.5-.4-.6-.6-.1-.2-.1-.4-.1-.6v-1c0-.4.1-.6.4-.6.1 0 .2 0 .4.1.1.1.3.1.4.2.6.3 1.3.5 2 .7.7.2 1.4.3 2.1.3 1.1 0 2-.2 2.6-.6.6-.4.9-.9.9-1.6 0-.5-.2-.9-.5-1.2-.3-.3-1-.6-2-1l-2.8-.9c-1.4-.4-2.4-1.1-3.1-2-.7-.9-1-1.9-1-3 0-.9.2-1.7.6-2.3.4-.7.9-1.2 1.6-1.7.7-.4 1.4-.8 2.2-1 .8-.2 1.7-.3 2.6-.3.5 0 .9 0 1.4.1.5.1.9.2 1.3.3.4.1.8.2 1.1.3.4.1.6.2.8.3.3.1.5.3.6.5.1.2.2.4.2.7v.9c0 .4-.1.6-.4.6-.2 0-.4-.1-.7-.2-.9-.4-1.9-.6-3-.6-1 0-1.8.2-2.3.5-.5.3-.8.8-.8 1.5 0 .5.2.9.6 1.2.4.3 1.1.7 2.2 1l2.8.9c1.4.4 2.4 1.1 3 1.9.6.8.9 1.8.9 2.9 0 .9-.2 1.7-.6 2.4-.4.7-.9 1.3-1.6 1.8-.7.5-1.5.8-2.4 1.1-.9.3-1.9.4-2.9.4z" fill="#FF9900"/>
+          <path d="M57.5 36.3c-6.9 5.1-17 7.8-25.7 7.8-12.1 0-23.1-4.5-31.3-11.9-.6-.6-.1-1.3.7-.9 8.9 5.2 19.9 8.3 31.3 8.3 7.7 0 16.1-1.6 23.9-4.9 1.2-.5 2.1.8 1.1 1.6z" fill="#FF9900"/>
+          <path d="M60.4 33c-.9-1.1-5.8-.5-7.9-.3-.7.1-.8-.5-.2-.9 3.9-2.7 10.3-2 11 .9.7 2.9-3.9 8.5-7.6 10.8-.5.3-1.1.1-.9-.4.8-2 2.6-6.5 1.6-8.1z" fill="#FF9900"/>
+        </svg>
+        <div style="display:flex;flex-direction:column;gap:2px;">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:.18em;color:var(--dim);">AMAZON WEB SERVICES</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:.12em;color:var(--dim);">TRAINING & CERTIFICATION</span>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap;">
+        <div style="background:rgba(255,153,0,.1);border:1px solid rgba(255,153,0,.3);padding:4px 12px;font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.15em;color:#FF9900;">AWS CLF</div>
+        <div style="background:rgba(57,255,20,.08);border:1px solid rgba(57,255,20,.2);padding:4px 12px;font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.15em;color:var(--lime);">COMPLÉTÉ JUN. 2026</div>
+      </div>
+      <div class="certif-name">AWS Cloud Practitioner Essentials</div>
+      <div class="certif-issuer" style="color:#FF9900;">AMAZON WEB SERVICES · CERTIFICATION OFFICIELLE</div>
+      <div class="certif-period">Juin 2026</div>
+      <p class="certif-desc">Fondamentaux du cloud AWS : services core, modèle de responsabilité partagée, sécurité, tarification et architecture cloud.</p>
     </div>
+
     <div class="assoc-box reveal">
       <div class="certif-icon">🌍</div>
       <div class="certif-name">Membre Actif</div>
@@ -1113,11 +1203,11 @@ footer{
   <div class="contact-grid reveal">
     <div class="contact-left">
       <div class="contact-heading">OPEN<br/>TO WORK</div>
-      <p class="contact-sub">En recherche active d'alternance en cybersécurité, réseaux ou systèmes.<br/>Rythme : <strong style="color:var(--cyan)">3 semaines entreprise / 1 semaine école</strong>.<br/>Disponible en Île-de-France et région parisienne.</p>
+      <p class="contact-sub">En recherche active d'alternance en cybersécurité, réseaux ou systèmes.<br/>Rythme : <strong style="color:var(--cyan)">3 semaines entreprise / 1 semaine école</strong>.<br/>Basé en Île-de-France, mobile partout en France et à l'international.</p>
       <div class="c-info">
         <div class="c-line"><span class="c-label">EMAIL</span><span class="c-val"><a href="mailto:djeyoboue44@gmail.com">djeyoboue44@gmail.com</a></span></div>
         <div class="c-line"><span class="c-label">PHONE</span><span class="c-val">+33 6 14 33 03 23</span></div>
-        <div class="c-line"><span class="c-label">LIEU</span><span class="c-val">91420 Morangis · Permis B</span></div>
+        <div class="c-line"><span class="c-label">ZONE</span><span class="c-val">Île-de-France · France & international · Permis B</span></div>
         <div class="c-line"><span class="c-label">GITHUB</span><span class="c-val"><a href="https://github.com/djeyoboue44-glitch" target="_blank">djeyoboue44-glitch</a></span></div>
         <div class="c-line"><span class="c-label">LINKEDIN</span><span class="c-val"><a href="https://linkedin.com/in/yoboue-dje" target="_blank">yoboue-dje</a></span></div>
         <div class="c-line"><span class="c-label">PORTFOLIO</span><span class="c-val"><a href="https://djeyoboue44-glitch.github.io/" target="_blank">djeyoboue44-glitch.github.io</a></span></div>
@@ -1144,6 +1234,25 @@ footer{
 </footer>
 
 <script>
+// Theme toggle — visitor can switch between dark (default) and light mode
+(function(){
+  const btn=document.getElementById('themeToggle');
+  const icon=document.getElementById('themeIcon');
+  const label=document.getElementById('themeLabel');
+  function sync(){
+    const isLight=document.documentElement.classList.contains('light');
+    icon.textContent=isLight?'☀️':'🌙';
+    label.textContent=isLight?'CLAIR':'SOMBRE';
+  }
+  sync();
+  btn.addEventListener('click',()=>{
+    document.documentElement.classList.toggle('light');
+    const isLight=document.documentElement.classList.contains('light');
+    try{localStorage.setItem('ydj-theme',isLight?'light':'dark');}catch(e){}
+    sync();
+  });
+})();
+
 // Custom cursor
 const cur=document.getElementById('cur'),cur2=document.getElementById('cur2');
 document.addEventListener('mousemove',e=>{
