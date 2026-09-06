@@ -697,47 +697,45 @@ footer{
       <svg class="radar-svg" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <radialGradient id="radarGlow" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#00f5ff" stop-opacity=".15"/>
-            <stop offset="100%" stop-color="#00f5ff" stop-opacity="0"/>
+            <stop offset="0%" style="stop-color:var(--cyan);stop-opacity:.15"/>
+            <stop offset="100%" style="stop-color:var(--cyan);stop-opacity:0"/>
           </radialGradient>
           <linearGradient id="sweepGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#00f5ff" stop-opacity="0"/>
-            <stop offset="100%" stop-color="#00f5ff" stop-opacity=".6"/>
+            <stop offset="0%" style="stop-color:var(--cyan);stop-opacity:0"/>
+            <stop offset="100%" style="stop-color:var(--cyan);stop-opacity:.5"/>
           </linearGradient>
         </defs>
-        <!-- Outer rings -->
-        <circle cx="200" cy="200" r="180" fill="none" stroke="rgba(0,245,255,.08)" stroke-width="1"/>
-        <circle cx="200" cy="200" r="135" fill="none" stroke="rgba(0,245,255,.1)" stroke-width="1"/>
-        <circle cx="200" cy="200" r="90" fill="none" stroke="rgba(0,245,255,.12)" stroke-width="1"/>
-        <circle cx="200" cy="200" r="45" fill="none" stroke="rgba(0,245,255,.15)" stroke-width="1"/>
-        <!-- Cross hairs -->
-        <line x1="20" y1="200" x2="380" y2="200" stroke="rgba(0,245,255,.06)" stroke-width="1"/>
-        <line x1="200" y1="20" x2="200" y2="380" stroke="rgba(0,245,255,.06)" stroke-width="1"/>
-        <line x1="73" y1="73" x2="327" y2="327" stroke="rgba(0,245,255,.04)" stroke-width="1"/>
-        <line x1="327" y1="73" x2="73" y2="327" stroke="rgba(0,245,255,.04)" stroke-width="1"/>
         <!-- Center glow -->
         <circle cx="200" cy="200" r="180" fill="url(#radarGlow)"/>
-        <!-- Sweep -->
-        <g id="radar-sweep" style="transform-origin:200px 200px;animation:radarSweep 4s linear infinite;">
-          <path d="M200,200 L380,200 A180,180 0 0,0 200,20 Z" fill="url(#sweepGrad)" opacity=".4"/>
+        <!-- Grid rings (diamond, 4 levels = 25/50/75/100%) -->
+        <polygon points="200,155 245,200 200,245 155,200" fill="none" style="stroke:var(--wire)" stroke-width="1"/>
+        <polygon points="200,110 290,200 200,290 110,200" fill="none" style="stroke:var(--wire)" stroke-width="1"/>
+        <polygon points="200,65 335,200 200,335 65,200" fill="none" style="stroke:var(--wire)" stroke-width="1"/>
+        <polygon points="200,20 380,200 200,380 20,200" fill="none" style="stroke:var(--wire)" stroke-width="1.2"/>
+        <!-- Axis lines -->
+        <line x1="200" y1="200" x2="200" y2="20" style="stroke:var(--wire)" stroke-width="1"/>
+        <line x1="200" y1="200" x2="380" y2="200" style="stroke:var(--wire)" stroke-width="1"/>
+        <line x1="200" y1="200" x2="200" y2="380" style="stroke:var(--wire)" stroke-width="1"/>
+        <line x1="200" y1="200" x2="20" y2="200" style="stroke:var(--wire)" stroke-width="1"/>
+        <!-- Faint rotating sweep for the "live" feel -->
+        <g id="radar-sweep" style="transform-origin:200px 200px;animation:radarSweep 6s linear infinite;">
+          <path d="M200,200 L380,200 A180,180 0 0,0 200,20 Z" fill="url(#sweepGrad)" opacity=".25"/>
         </g>
-        <!-- Center dot -->
-        <circle cx="200" cy="200" r="4" fill="#00f5ff" opacity=".8"/>
-        <circle cx="200" cy="200" r="8" fill="none" stroke="#00f5ff" stroke-width="1" opacity=".4"/>
-        <!-- Blips -->
-        <circle id="b1" cx="280" cy="140" r="3" fill="#39ff14" opacity=".9"><animate attributeName="opacity" values="0;1;0" dur="2.5s" begin="0.3s" repeatCount="indefinite"/></circle>
-        <circle id="b2" cx="155" cy="260" r="3" fill="#39ff14" opacity=".9"><animate attributeName="opacity" values="0;1;0" dur="3s" begin="1s" repeatCount="indefinite"/></circle>
-        <circle id="b3" cx="310" cy="240" r="2" fill="#ff2254" opacity=".9"><animate attributeName="opacity" values="0;1;0" dur="2s" begin="0.7s" repeatCount="indefinite"/></circle>
-        <circle id="b4" cx="120" cy="170" r="2.5" fill="#39ff14" opacity=".9"><animate attributeName="opacity" values="0;1;0" dur="3.5s" begin="1.5s" repeatCount="indefinite"/></circle>
-        <!-- Labels -->
-        <text x="285" y="132" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(57,255,20,.6)" letter-spacing="1">ELK SIEM</text>
-        <text x="115" y="256" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(57,255,20,.6)" letter-spacing="1">AD LAB</text>
-        <text x="315" y="236" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(255,34,84,.6)" letter-spacing="1">THREAT</text>
-        <text x="80" y="164" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(57,255,20,.6)" letter-spacing="1">NETWORK</text>
-        <!-- Ring labels -->
-        <text x="202" y="158" font-family="JetBrains Mono,monospace" font-size="6" fill="rgba(0,245,255,.3)" letter-spacing="1">R&amp;D</text>
-        <text x="202" y="113" font-family="JetBrains Mono,monospace" font-size="6" fill="rgba(0,245,255,.25)" letter-spacing="1">PENTEST</text>
-        <text x="202" y="68" font-family="JetBrains Mono,monospace" font-size="6" fill="rgba(0,245,255,.2)" letter-spacing="1">INFRA</text>
+        <!-- Skill polygon (Infra / Blue Team / Red Team / Dev & Cloud) -->
+        <polygon points="200,38 358.4,200 200,347.6 83,200" style="fill:var(--cyan);stroke:var(--cyan)" fill-opacity=".12" stroke-width="2"/>
+        <!-- Vertex dots, colour-matched to the skill-matrix pills below -->
+        <circle cx="200" cy="38" r="5" style="fill:var(--lime)"><animate attributeName="r" values="4;6;4" dur="2.6s" repeatCount="indefinite"/></circle>
+        <circle cx="358.4" cy="200" r="5" style="fill:var(--cyan)"><animate attributeName="r" values="4;6;4" dur="2.6s" begin="0.5s" repeatCount="indefinite"/></circle>
+        <circle cx="200" cy="347.6" r="5" style="fill:var(--red)"><animate attributeName="r" values="4;6;4" dur="2.6s" begin="1s" repeatCount="indefinite"/></circle>
+        <circle cx="83" cy="200" r="5" style="fill:var(--amber)"><animate attributeName="r" values="4;6;4" dur="2.6s" begin="1.5s" repeatCount="indefinite"/></circle>
+        <!-- Center -->
+        <circle cx="200" cy="200" r="4" style="fill:var(--cyan)" opacity=".8"/>
+        <circle cx="200" cy="200" r="8" fill="none" style="stroke:var(--cyan)" stroke-width="1" opacity=".4"/>
+        <!-- Axis labels -->
+        <text x="200" y="12" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" style="fill:var(--lime)" letter-spacing="1">INFRA · 90%</text>
+        <text x="388" y="204" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="9" style="fill:var(--cyan)" letter-spacing="1">BLUE TEAM · 88%</text>
+        <text x="200" y="398" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" style="fill:var(--red)" letter-spacing="1">RED TEAM · 82%</text>
+        <text x="12" y="204" text-anchor="end" font-family="JetBrains Mono,monospace" font-size="9" style="fill:var(--amber)" letter-spacing="1">DEV & CLOUD · 65%</text>
       </svg>
     </div>
   </div>
