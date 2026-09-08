@@ -670,7 +670,7 @@ footer{
         <div class="hstat-l">ANS PROJETS</div>
       </div>
       <div class="hstat">
-        <div class="hstat-n">5</div>
+        <div class="hstat-n">6</div>
         <div class="hstat-l">PROJETS MAJEURS</div>
       </div>
       <div class="hstat">
@@ -907,12 +907,15 @@ footer{
         <span class="pill pill-r">Nmap</span>
         <span class="pill pill-r">NTLM / Kerberos</span>
         <span class="pill pill-r">LLMNR / NBT-NS</span>
+        <span class="pill pill-r">Atomic Red Team</span>
       </div>
     </div>
     <div class="matrix-cell reveal">
       <div class="mc-cat">BLUE TEAM</div>
       <div class="mc-title">Monitoring & Détection</div>
       <div class="pill-wrap">
+        <span class="pill pill-c">Wazuh</span>
+        <span class="pill pill-c">Sysmon</span>
         <span class="pill pill-c">ELK Stack</span>
         <span class="pill pill-c">Elasticsearch</span>
         <span class="pill pill-c">Logstash</span>
@@ -976,6 +979,42 @@ footer{
   </div>
 
   <div class="proj-grid">
+
+    <div class="proj p-personal reveal">
+      <div class="proj-head">
+        <div class="proj-tag"><div class="tag-dot"></div> PROJET PERSONNEL — HOME LAB</div>
+        <div class="proj-name">Detection Engineering — Wazuh & Atomic Red Team</div>
+        <div class="proj-env">VMWARE · WAZUH 4.13.1 · SYSMON · SEP 2026</div>
+      </div>
+      <div class="proj-body">
+        <p class="proj-desc">Lab de détection MITRE ATT&CK complet : déploiement d'un SIEM/EDR Wazuh, instrumentation d'un poste Windows avec Sysmon, simulation d'attaques réelles avec Atomic Red Team, et écriture d'une règle de détection personnalisée pour combler un angle mort.</p>
+        <div class="chain">
+          <div class="chain-label">CYCLE DÉTECTION</div>
+          <div class="chain-steps">
+            <span class="cs">Wazuh SIEM/EDR</span><span class="ca">›</span>
+            <span class="cs">Sysmon</span><span class="ca">›</span>
+            <span class="cs">Atomic Red Team</span><span class="ca">›</span>
+            <span class="cs">Threat Hunting</span><span class="ca">›</span>
+            <span class="cs">Custom Rule</span><span class="ca">›</span>
+            <span class="cs">Validation 24h</span>
+          </div>
+        </div>
+        <div class="tools-row">
+          <span class="pill pill-c">Wazuh</span>
+          <span class="pill pill-c">Sysmon</span>
+          <span class="pill pill-r">Atomic Red Team</span>
+          <span class="pill pill-c">MITRE ATT&amp;CK</span>
+          <span class="pill pill-l">PowerShell</span>
+        </div>
+        <ul class="tl-pts">
+          <li>Détection native confirmée sur 6 tactiques MITRE ATT&CK</li>
+          <li>Règle de détection custom écrite (local_rules.xml) sur T1082 — System Information Discovery</li>
+          <li>Validation de la règle dans la durée (rejouée sur 24h, 2 hits confirmés)</li>
+          <li>Compréhension fine de la chaîne Wazuh : decoder → champs extraits → rule → alerte</li>
+        </ul>
+        <a class="proj-lnk" href="https://github.com/djeyoboue44-glitch/edr-detection-engineering" target="_blank">→ Voir sur GitHub</a>
+      </div>
+    </div>
 
     <div class="proj p-live reveal">
       <div class="proj-head">
