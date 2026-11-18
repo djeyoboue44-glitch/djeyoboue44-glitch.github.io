@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Yoboue Dje — Ingénieur Cybersécurité & Infrastructure</title>
+<title>Yoboue Dje — Alternant cybersécurité, réseaux & systèmes</title>
+<meta name="description" content="Portfolio de Yoboue Dje, alternant en cybersécurité chez Groupe Convergence et étudiant en Mastère Expert IT à l'École IRIS Paris : labs Active Directory, SIEM, Wazuh, pfSense."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <script>
@@ -113,6 +114,7 @@ nav{
 .theme-toggle:hover{border-color:var(--accent);color:var(--ink);}
 .nav-right{display:flex;align-items:center;gap:18px;}
 @media(max-width:860px){.nav-links{display:none;}}
+@media(max-width:560px){.nav-status{display:none;}}
 
 /* ============================== HERO ============================== */
 #hero{position:relative;padding:80px 6vw 90px;overflow:hidden;}
@@ -120,7 +122,7 @@ nav{
   max-width:1180px;margin:0 auto;
   display:grid;grid-template-columns:1.15fr .85fr;gap:60px;align-items:center;
 }
-@media(max-width:900px){.hero-grid{grid-template-columns:1fr;}.hero-diagram{display:none;}}
+@media(max-width:900px){.hero-grid{grid-template-columns:1fr;}.hero-diagram{justify-content:flex-start;}}
 
 .hero-tag{
   font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--ink-faint);
@@ -169,8 +171,19 @@ h1.hero-name{
   text-align:center;font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:var(--ink-faint);
   margin-top:10px;
 }
-.dial-poly{opacity:0;stroke-dasharray:600;stroke-dashoffset:600;animation:draw 1.4s ease .8s forwards;}
-@keyframes draw{to{stroke-dashoffset:0;opacity:1;}}
+/* "en ce moment" — a small log sheet of current work */
+.now{
+  width:100%;max-width:380px;border:1px solid var(--line);background:var(--bg-panel);
+  opacity:0;animation:rise .6s ease .5s forwards;
+}
+.now-head{
+  font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:var(--ink-faint);
+  padding:12px 18px;border-bottom:1px solid var(--line);
+}
+.now-row{display:grid;grid-template-columns:86px 1fr;border-bottom:1px solid var(--line-soft);}
+.now-row:last-child{border-bottom:none;}
+.now-k{font-family:'IBM Plex Mono',monospace;font-size:.64rem;color:var(--accent);padding:14px 0 14px 18px;}
+.now-v{font-size:.88rem;color:var(--ink-dim);line-height:1.5;padding:12px 18px 12px 0;}
 
 /* ============================== SECTIONS ============================== */
 section{padding:76px 0;position:relative;}
@@ -224,7 +237,7 @@ section{padding:76px 0;position:relative;}
 }
 
 /* ---------- projects as spec sheets ---------- */
-.sheets{display:grid;grid-template-columns:repeat(auto-fit,minmax(400px,1fr));gap:1px;background:var(--line-soft);border:1px solid var(--line-soft);}
+.sheets{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(400px,100%),1fr));gap:1px;background:var(--line-soft);border:1px solid var(--line-soft);}
 .sheet{background:var(--bg);padding:30px;}
 .sheet-live{border-top:2px solid var(--accent);}
 .sheet-school{border-top:2px dashed var(--line);}
@@ -300,7 +313,7 @@ footer a:hover{color:var(--ink);}
     <li><a href="#contact">Contact</a></li>
   </ul>
   <div class="nav-right">
-    <div class="nav-status"><div class="status-dot"></div>Disponible pour une alternance</div>
+    <div class="nav-status"><div class="status-dot"></div>En alternance · Groupe Convergence</div>
     <button class="theme-toggle" id="themeToggle" type="button" aria-label="Changer de thème">
       <span id="themeIcon">◐</span><span id="themeLabel">Sombre</span>
     </button>
@@ -315,14 +328,15 @@ footer a:hover{color:var(--ink);}
       <h1 class="hero-name">Yoboue Dje</h1>
       <p class="hero-role">Cybersécurité · Réseaux · Systèmes · Infrastructure</p>
       <p class="hero-bio">
-        Étudiant en Mastère Expert IT, avec <strong>deux ans de projets techniques intensifs</strong> :
-        SIEM ELK Stack, pentest Active Directory, supervision d'infrastructure Docker / Prometheus,
-        administration Windows Server. Je monte des labs pour comprendre les attaques et construire
-        les défenses en face.
+        Alternant en cybersécurité chez <strong>Groupe Convergence</strong> depuis novembre 2026,
+        en parallèle de mon Mastère Expert IT. Au quotidien je travaille sur des pare-feu
+        (Barracuda, Versa) et des environnements virtualisés. À côté, je monte mes propres labs :
+        pentest Active Directory, SIEM, détection avec Wazuh, haute disponibilité pfSense.
+        J'aime comprendre une attaque de bout en bout pour savoir comment la détecter.
       </p>
       <div class="specline">
         <div class="spec"><div class="spec-n">2+</div><div class="spec-l">ANS DE PROJETS</div></div>
-        <div class="spec"><div class="spec-n">6</div><div class="spec-l">PROJETS MAJEURS</div></div>
+        <div class="spec"><div class="spec-n">7</div><div class="spec-l">PROJETS DOCUMENTÉS</div></div>
         <div class="spec"><div class="spec-n">FCF</div><div class="spec-l">CERTIFIÉ FORTINET</div></div>
         <div class="spec"><div class="spec-n">B2</div><div class="spec-l">ANGLAIS</div></div>
       </div>
@@ -335,30 +349,24 @@ footer a:hover{color:var(--ink);}
     </div>
 
     <div class="hero-diagram">
-      <div>
-        <svg width="340" height="340" viewBox="0 0 340 340" xmlns="http://www.w3.org/2000/svg">
-          <polygon points="170,30 310,170 170,310 30,170" fill="none" stroke="var(--line-soft)" stroke-width="1"/>
-          <polygon points="170,65 275,170 170,275 65,170" fill="none" stroke="var(--line-soft)" stroke-width="1"/>
-          <polygon points="170,100 240,170 170,240 100,170" fill="none" stroke="var(--line-soft)" stroke-width="1"/>
-          <line x1="170" y1="170" x2="170" y2="30" stroke="var(--line-soft)" stroke-width="1"/>
-          <line x1="170" y1="170" x2="310" y2="170" stroke="var(--line-soft)" stroke-width="1"/>
-          <line x1="170" y1="170" x2="170" y2="310" stroke="var(--line-soft)" stroke-width="1"/>
-          <line x1="170" y1="170" x2="30" y2="170" stroke="var(--line-soft)" stroke-width="1"/>
-
-          <polygon class="dial-poly" points="170,53 296,170 170,292 76,170" fill="var(--accent)" fill-opacity=".12" stroke="var(--accent)" stroke-width="1.5"/>
-
-          <circle cx="170" cy="53" r="3" fill="var(--ink)"/>
-          <circle cx="296" cy="170" r="3" fill="var(--ink)"/>
-          <circle cx="170" cy="292" r="3" fill="var(--ink)"/>
-          <circle cx="76" cy="170" r="3" fill="var(--ink)"/>
-          <circle cx="170" cy="170" r="2.5" fill="var(--ink-faint)"/>
-
-          <text x="170" y="18" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--ink-dim)">INFRA 90</text>
-          <text x="325" y="174" text-anchor="start" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--ink-dim)">BLUE 88</text>
-          <text x="170" y="330" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--ink-dim)">RED 82</text>
-          <text x="14" y="174" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--ink-dim)">CLOUD 65</text>
-        </svg>
-        <div class="dial-cap">Répartition des compétences — auto-évaluation</div>
+      <div class="now">
+        <div class="now-head">En ce moment — nov. 2026</div>
+        <div class="now-row">
+          <div class="now-k">Entreprise</div>
+          <div class="now-v">Enrôlement d'un pare-feu virtuel Versa dans Concerto, sur Proxmox</div>
+        </div>
+        <div class="now-row">
+          <div class="now-k">École</div>
+          <div class="now-v">Deux pfSense en haute dispo (CARP, pfsync) avec Suricata en IDS</div>
+        </div>
+        <div class="now-row">
+          <div class="now-k">Lab perso</div>
+          <div class="now-v">Prise en main de Proxmox VE et d'un serveur SSH sous Debian 13</div>
+        </div>
+        <div class="now-row">
+          <div class="now-k">Objectif</div>
+          <div class="now-v">Devenir RSSI. Prochaine étape : CompTIA Security+</div>
+        </div>
       </div>
     </div>
   </div>
@@ -377,9 +385,9 @@ footer a:hover{color:var(--ink);}
     <div class="group-label">Formation</div>
     <div class="track">
       <div class="entry">
-        <div class="entry-date">2025 — 2026 · en cours</div>
-        <div class="entry-title">Mastère Expert IT</div>
-        <div class="entry-org">École IRIS, Paris</div>
+        <div class="entry-date">2025 — 2027 · en cours, en alternance</div>
+        <div class="entry-title">Mastère Expert IT — Cybersécurité, Réseaux & Systèmes</div>
+        <div class="entry-org">École IRIS, Paris · RNCP niveau 7</div>
         <ul>
           <li>Cybersécurité offensive et défensive</li>
           <li>Administration réseaux et systèmes</li>
@@ -401,6 +409,37 @@ footer a:hover{color:var(--ink);}
 
     <div class="group-label">Expérience professionnelle</div>
     <div class="track">
+      <div class="entry">
+        <div class="entry-date">Nov. 2026 — août 2027 · en cours</div>
+        <div class="entry-title">Alternant cybersécurité</div>
+        <div class="entry-org">Groupe Convergence · BU Cybersécurité & Services managés</div>
+        <ul>
+          <li>Réinitialisation et réinstallation d'un pare-feu Barracuda CloudGen</li>
+          <li>Enrôlement d'un pare-feu virtuel Versa (VM sur Proxmox) dans Versa Concerto : plan d'adressage, template SD-WAN, staging et vérifications</li>
+          <li>Diagnostic des pannes rencontrées en chemin (passerelle injoignable, tunnel de contrôle down) et remontée au tuteur</li>
+        </ul>
+        <div class="entry-tags">
+          <span class="tag">Barracuda CloudGen</span>
+          <span class="tag">Versa SD-WAN</span>
+          <span class="tag">Proxmox VE</span>
+          <span class="tag">Services managés</span>
+        </div>
+      </div>
+      <div class="entry">
+        <div class="entry-date">2026 · un peu plus de 2 mois</div>
+        <div class="entry-title">Agent de restaurant</div>
+        <div class="entry-org">Buffalo Grill, Massy</div>
+        <ul>
+          <li>Polyvalence sur les postes du restaurant pendant les services</li>
+          <li>Travail en équipe à un rythme soutenu, contact direct avec la clientèle</li>
+          <li>Poste quitté pour démarrer mon alternance chez Groupe Convergence</li>
+        </ul>
+        <div class="entry-tags">
+          <span class="tag">Service client</span>
+          <span class="tag">Travail en équipe</span>
+          <span class="tag">Réactivité</span>
+        </div>
+      </div>
       <div class="entry">
         <div class="entry-date">Sept. 2023 — Juin 2024</div>
         <div class="entry-title">Employé polyvalent</div>
@@ -477,13 +516,15 @@ footer a:hover{color:var(--ink);}
           <span class="bom-item">TCP/IP</span><span class="bom-item">VLAN</span><span class="bom-item">DNS</span>
           <span class="bom-item">DHCP</span><span class="bom-item">HTTP/HTTPS</span><span class="bom-item">Windows Server 2022</span>
           <span class="bom-item">Active Directory</span><span class="bom-item">PowerShell</span><span class="bom-item">Haute disponibilité</span>
-          <span class="bom-item">Cisco Packet Tracer</span><span class="bom-item">Firewall</span><span class="bom-item">MQTT</span>
+          <span class="bom-item">Cisco Packet Tracer</span><span class="bom-item">MQTT</span><span class="bom-item">pfSense</span>
+          <span class="bom-item">CARP / pfsync</span><span class="bom-item">Suricata</span><span class="bom-item">Barracuda CloudGen</span>
+          <span class="bom-item">Versa SD-WAN</span><span class="bom-item">Debian / SSH</span>
         </div>
       </div>
       <div class="bom-cat">
         <div class="bom-cat-head"><span class="idx">TD</span><h3>Outils & développement</h3><span class="sub">Virtualisation & dev</span></div>
         <div class="bom-items">
-          <span class="bom-item">VMware Workstation</span><span class="bom-item">VirtualBox</span><span class="bom-item">Kali Linux</span>
+          <span class="bom-item">VMware Workstation</span><span class="bom-item">Proxmox VE</span><span class="bom-item">VirtualBox</span><span class="bom-item">Kali Linux</span>
           <span class="bom-item">Ubuntu</span><span class="bom-item">Docker Compose</span><span class="bom-item">AWS</span>
           <span class="bom-item">Python</span><span class="bom-item">FastAPI</span><span class="bom-item">SQL / SSMS</span>
           <span class="bom-item">HTML / CSS</span><span class="bom-item">WordPress</span>
@@ -500,10 +541,30 @@ footer a:hover{color:var(--ink);}
   <div class="wrap">
     <div class="sec-head">
       <h2>Projets</h2>
-      <p>Six réalisations techniques, du home lab au projet d'école.</p>
+      <p>Sept réalisations techniques, du home lab au projet d'école.</p>
     </div>
 
     <div class="sheets">
+
+      <div class="sheet sheet-school">
+        <div class="sheet-kind">Projet d'école — Mastère 2</div>
+        <div class="sheet-title">Pare-feu pfSense en haute disponibilité + Suricata</div>
+        <div class="sheet-env">VMware Workstation / pfSense / Suricata — nov. 2026</div>
+        <p class="sheet-desc">Deux pare-feu pfSense en cluster actif/passif devant sept segments réseau (SOC, AD, DMZ, utilisateurs, Docker, honeypot, synchro), avec Suricata en détection d'intrusion.</p>
+        <div class="flow">
+          <span class="step">pfSense MASTER</span><span class="arrow">↔</span>
+          <span class="step">pfsync + XMLRPC</span><span class="arrow">↔</span>
+          <span class="step">pfSense BACKUP</span><span class="arrow">→</span>
+          <span class="step">6 VIP CARP</span><span class="arrow">→</span>
+          <span class="step">Test de bascule</span>
+        </div>
+        <ul>
+          <li>6 adresses virtuelles CARP, une par réseau interne, plus un lien de synchro dédié</li>
+          <li>Synchro des états (pfsync) et de la configuration (XMLRPC) entre les deux nœuds</li>
+          <li>Suricata avec les règles ET Open en mode IDS sur le LAN</li>
+          <li>Bascule testée sous ping continu. Cause racine d'une panne trouvée : RAM trop faible, règles pf non chargées</li>
+        </ul>
+      </div>
 
       <div class="sheet sheet-personal">
         <div class="sheet-kind">Projet personnel — home lab</div>
@@ -550,8 +611,8 @@ footer a:hover{color:var(--ink);}
       </div>
 
       <div class="sheet sheet-live">
-        <div class="sheet-kind">Projet personnel</div>
-        <div class="sheet-title">Ingénieur Cybersécurité & Infrastructure</div>
+        <div class="sheet-kind">Projet d'école</div>
+        <div class="sheet-title">Supervision et analyse de trafic réseau</div>
         <div class="sheet-env">École IRIS, Paris — sept. 2025 → aujourd'hui</div>
         <p class="sheet-desc">Supervision sécurité d'une infrastructure réseau complète. Analyse de trafic, détection d'intrusions et déploiement SIEM.</p>
         <div class="sheet-tools">
@@ -669,8 +730,8 @@ footer a:hover{color:var(--ink);}
   <div class="wrap">
     <div class="titleblock">
       <div class="tb-top">
-        <h2>Recrutons ensemble</h2>
-        <p>En recherche active d'alternance en cybersécurité, réseaux ou systèmes. Rythme : 3 semaines entreprise / 1 semaine école. Basé en Île-de-France, mobile partout en France et à l'international.</p>
+        <h2>Me contacter</h2>
+        <p>Je suis en alternance chez Groupe Convergence jusqu'en août 2027. Pour échanger sur un projet, un lab ou une opportunité après mon Mastère, écrivez-moi. Basé en Île-de-France.</p>
       </div>
       <div class="tb-grid">
         <div class="tb-cell"><div class="tb-label">Email</div><div class="tb-val"><a href="mailto:djeyoboue44@gmail.com">djeyoboue44@gmail.com</a></div></div>
