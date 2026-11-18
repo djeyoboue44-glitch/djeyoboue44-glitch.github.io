@@ -117,7 +117,7 @@ nav{
 @media(max-width:560px){.nav-status{display:none;}}
 
 /* ============================== HERO ============================== */
-#hero{position:relative;padding:80px 6vw 90px;overflow:hidden;}
+#hero{position:relative;padding:80px 0 64px;overflow:hidden;}
 .hero-grid{
   max-width:1180px;margin:0 auto;
   display:grid;grid-template-columns:1.15fr .85fr;gap:60px;align-items:center;
@@ -207,7 +207,7 @@ section{padding:76px 0;position:relative;}
 .entry-title{font-family:'Space Grotesk',sans-serif;font-size:1.15rem;font-weight:600;}
 .entry-org{color:var(--ink-dim);font-size:.86rem;margin-top:2px;margin-bottom:12px;}
 .entry ul{list-style:none;display:flex;flex-direction:column;gap:5px;max-width:62ch;}
-.entry li{font-size:.94rem;color:var(--ink-dim);padding-left:14px;position:relative;}
+.entry li{font-size:.94rem;color:var(--ink-dim);padding-left:24px;position:relative;}
 .entry li::before{content:'—';position:absolute;left:0;color:var(--ink-faint);}
 .entry-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;}
 .tag{
@@ -239,9 +239,13 @@ section{padding:76px 0;position:relative;}
 /* ---------- projects as spec sheets ---------- */
 .sheets{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(400px,100%),1fr));gap:1px;background:var(--line-soft);border:1px solid var(--line-soft);}
 .sheet{background:var(--bg);padding:30px;}
-.sheet-live{border-top:2px solid var(--accent);}
+.sheet-personal{border-top:2px solid var(--accent);}
 .sheet-school{border-top:2px dashed var(--line);}
-.sheet-personal{border-top:2px dotted var(--line);}
+.sheet:last-child:nth-child(odd){grid-column:1/-1;}
+.sheets-legend{display:flex;flex-wrap:wrap;gap:22px;margin-top:16px;font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:var(--ink-faint);}
+.sheets-legend span{display:flex;align-items:center;gap:8px;}
+.sheets-legend i{display:inline-block;width:22px;border-top:2px solid var(--accent);}
+.sheets-legend i.school{border-top:2px dashed var(--line);}
 .sheet-kind{font-family:'IBM Plex Mono',monospace;font-size:.64rem;color:var(--ink-faint);margin-bottom:10px;}
 .sheet-title{font-family:'Space Grotesk',sans-serif;font-size:1.18rem;font-weight:600;}
 .sheet-env{font-family:'IBM Plex Mono',monospace;font-size:.66rem;color:var(--ink-faint);margin-top:5px;}
@@ -251,7 +255,7 @@ section{padding:76px 0;position:relative;}
 .flow span.arrow{color:var(--ink-faint);}
 .sheet-tools{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0;}
 .sheet ul{list-style:none;display:flex;flex-direction:column;gap:5px;margin-bottom:16px;}
-.sheet li{font-size:.88rem;color:var(--ink-dim);padding-left:14px;position:relative;}
+.sheet li{font-size:.88rem;color:var(--ink-dim);padding-left:24px;position:relative;}
 .sheet li::before{content:'—';position:absolute;left:0;color:var(--ink-faint);}
 .sheet-link{
   display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:.76rem;
@@ -283,15 +287,15 @@ section{padding:76px 0;position:relative;}
 .tb-top{padding:34px;border-bottom:1px solid var(--line-soft);}
 .tb-top h2{font-size:clamp(1.8rem,3.4vw,2.6rem);}
 .tb-top p{color:var(--ink-dim);margin-top:12px;max-width:56ch;font-size:.98rem;line-height:1.7;}
-.tb-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));}
-.tb-cell{padding:18px 22px;border-top:1px solid var(--line-soft);border-left:1px solid var(--line-soft);}
-.tb-cell:nth-child(-n+3){border-top:none;}
-@media(max-width:640px){.tb-cell:nth-child(-n+3){border-top:1px solid var(--line-soft);}.tb-cell:nth-child(1){border-top:none;}}
+.tb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-soft);}
+.tb-cell{padding:18px 22px;background:var(--bg);min-width:0;overflow-wrap:anywhere;}
+@media(max-width:760px){.tb-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:480px){.tb-grid{grid-template-columns:1fr;}}
 .tb-label{font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.05em;}
 .tb-val{margin-top:6px;font-size:.92rem;}
 .tb-val a{text-decoration:none;color:var(--accent);}
 .tb-val a:hover{text-decoration:underline;}
-.tb-actions{display:flex;gap:10px;flex-wrap:wrap;padding:22px 22px 26px;border-top:1px solid var(--line-soft);}
+.tb-actions{display:flex;gap:10px;flex-wrap:wrap;padding:22px 22px 26px;}
 
 footer{
   padding:30px 6vw;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:.68rem;
@@ -322,7 +326,7 @@ footer a:hover{color:var(--ink);}
 
 <!-- ============================== HERO ============================== -->
 <section id="hero">
-  <div class="hero-grid">
+  <div class="hero-grid wrap">
     <div>
       <div class="hero-tag">Mastère Expert IT — École IRIS, Paris — 2025 / 2027</div>
       <h1 class="hero-name">Yoboue Dje</h1>
@@ -517,6 +521,7 @@ footer a:hover{color:var(--ink);}
     <div class="sec-head">
       <h2>Projets</h2>
       <p>Sept réalisations techniques, du home lab au projet d'école.</p>
+      <div class="sheets-legend"><span><i></i>Projet personnel</span><span><i class="school"></i>Projet d'école</span></div>
     </div>
 
     <div class="sheets">
@@ -563,7 +568,7 @@ footer a:hover{color:var(--ink);}
         <a class="sheet-link" href="https://github.com/djeyoboue44-glitch/edr-detection-engineering" target="_blank">Voir sur GitHub</a>
       </div>
 
-      <div class="sheet sheet-live">
+      <div class="sheet sheet-personal">
         <div class="sheet-kind">Projet personnel — en cours</div>
         <div class="sheet-title">Plateforme de supervision IoT Telemetry</div>
         <div class="sheet-env">Docker Compose / Prometheus / Grafana — juin 2026</div>
@@ -585,7 +590,7 @@ footer a:hover{color:var(--ink);}
         <a class="sheet-link" href="https://github.com/djeyoboue44-glitch/lab-iot-telemetry-monitoring" target="_blank">Voir sur GitHub</a>
       </div>
 
-      <div class="sheet sheet-live">
+      <div class="sheet sheet-school">
         <div class="sheet-kind">Projet d'école</div>
         <div class="sheet-title">Supervision et analyse de trafic réseau</div>
         <div class="sheet-env">École IRIS, Paris — sept. 2025 → aujourd'hui</div>
@@ -602,7 +607,7 @@ footer a:hover{color:var(--ink);}
         <a class="sheet-link" href="https://github.com/djeyoboue44-glitch/wireshark-network-analysis-lab" target="_blank">Voir sur GitHub</a>
       </div>
 
-      <div class="sheet sheet-school">
+      <div class="sheet sheet-personal">
         <div class="sheet-kind">Projet personnel</div>
         <div class="sheet-title">Déploiement SIEM ELK Stack</div>
         <div class="sheet-env">VMware / Kali Linux / Ubuntu — janvier 2026</div>
@@ -667,7 +672,7 @@ footer a:hover{color:var(--ink);}
   <div class="wrap">
     <div class="sec-head">
       <h2>Certifications</h2>
-      <p>Reconnaissances officielles et engagement associatif.</p>
+      <p>Certifications et parcours de formation validés.</p>
     </div>
 
     <div class="stamps">
@@ -685,14 +690,6 @@ footer a:hover{color:var(--ink);}
         <div class="stamp-status">Complété</div>
         <div class="stamp-desc">Fondamentaux du cloud AWS : services core, modèle de responsabilité partagée, sécurité, tarification et architecture cloud.</div>
         <div class="stamp-period">Juin 2026</div>
-      </div>
-
-      <div class="stamp">
-        <div class="stamp-org">JCI Côte d'Ivoire</div>
-        <div class="stamp-name">Membre actif — Jeune Chambre Internationale</div>
-        <div class="stamp-status">En cours</div>
-        <div class="stamp-desc">Actions de sensibilisation, collaboration en équipe sur des initiatives communautaires. Leadership et engagement civique.</div>
-        <div class="stamp-period">2024 — aujourd'hui</div>
       </div>
     </div>
   </div>
